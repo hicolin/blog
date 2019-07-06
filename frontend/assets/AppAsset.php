@@ -12,12 +12,22 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'font-awesome/css/font-awesome.min.css',
+        'layui/css/layui.css',
+        'css/master.css',
+        'css/gloable.css',
+        'css/nprogress.css',
+        'css/blog.css',
+        'css/message.css',
     ];
     public $js = [
+        'layui/layui.js',
+        'js/global.js',
+        'js/plugins/nprogress.js',
+        'js/article.js',
+        'js/page_message.js',
+        'js/page_comment.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
     ];
 }

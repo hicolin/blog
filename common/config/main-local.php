@@ -3,10 +3,11 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=colin_cms',
-            'username' => 'root',
-            'password' => 'root',
-            'charset' => 'utf8',
+            'dsn' => 'mysql:host=localhost;dbname=hicolin_cn',
+            'username' => 'hicolin_cn',
+            'password' => 'PMSTdcCxHsdffmza',
+            'charset' => 'utf8mb4',
+            'tablePrefix' => 'colin_',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

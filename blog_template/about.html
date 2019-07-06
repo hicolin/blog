@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="colin" />
+    <meta name="robots" content="all" />
+    <title>首页</title>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" />
+    <link rel="stylesheet" href="css/master.css" />
+    <link rel="stylesheet" href="css/gloable.css" />
+    <link rel="stylesheet" href="css/nprogress.css" />
+    <link rel="stylesheet" href="css/blog.css" />
+</head>
+<body>
+    <div class="header">
+    </div>
+    <header class="gird-header">
+        <div class="header-fixed">
+            <div class="header-inner">
+                <a href="index.html" class="header-logo" id="logo">Mr.Colin</a>
+                <nav class="nav" id="nav">
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+						<li><a href="index.html?type=1">后端</a></li>
+                        <li><a href="index.html?type=2">前端</a></li>
+                        <li><a href="index.html?type=3">运维</a></li>
+                        <li><a href="index.html?type=4">杂项</a></li>
+                        <li><a href="message.html">留言</a></li>
+						<li><a href="about.html">关于</a></li>
+                        <!--<li><a href="link.html">友链</a></li>-->
+                    </ul>
+                </nav>
+                <a class="phone-menu">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="doc-container" id="doc-container">
+		<div class="container-fixed zoomIn">
+			<div class="container-inner">
+				<article>
+					<section>
+						<h1>关于我</h1>
+						<p>
+							毕业后在古都西安某个工厂装盒子，很迷茫。2015年离开西安到成都转行做开发，然沉迷撸码，日渐消瘦。
+						</p>
+						<span>
+                    可以通过以下方式联系到我：
+                </span>
+						<ul>
+							<li>邮 箱 ：<a href="mailto:930054439@qq.com">930054439@qq.com</a></li>
+							<li>码 云 ：<a href="https://gitee.com/yssgit/events" target="_blank">https://gitee.com/yssgit/events</a></li>
+						</ul>
+					</section>
+					<section>
+						<h1>关于本站</h1>
+						<p>
+							本站建于2018年4月，主要用于记录学习笔记，技术分享、交流。
+						</p>
+						<span>
+                    本站结构：
+                </span>
+						<ul>
+							<li>前 端 ：<code>Layui</code></li>
+							<li>后 端 ：<code>MVC5 + MYSQL</code></li>
+						</ul>
+						<p>
+							本站采用阿里云提供的服务器ESC和存储对象OSS。
+						</p>
+					</section>
+					<section>
+						<h1>关于版权</h1>
+						<p>
+							本站采用「 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" target="_blank">署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)</a>」创作共享协议。
+							只要在使用时注明出处，那么您可以可以对本站所有原创内容进行转载、节选、二次创作，但是您不得对其用于商业目的。
+						</p>
+					</section>
+					<section>
+						<h1>特别说明</h1>
+						<ul>
+							<li>本站文章仅代表个人观点，和任何组织或个人无关。</li>
+							<li>本站前端开发代码没有考虑对IE浏览器的兼容。</li>
+							<li>用户邮箱仅作回复消息用，不对外使用。</li>
+						</ul>
+						<br><br>
+						<div>
+							<img src="https://yssimage.oss-cn-hangzhou.aliyuncs.com/bg9.jpg" style="width:100%;height:320px;">
+						</div>
+					</section>
+				</article>
+			</div>
+		</div>
+    </div>
+    <footer class="grid-footer">
+        <div class="footer-fixed">
+            <div class="copyright">
+                <div class="info">
+                    <div class="contact">
+                        <a href="javascript:void(0)" class="github" target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="https://wpa.qq.com/msgrd?v=3&uin=930054439&site=qq&menu=yes" class="qq" target="_blank" title="930054439"><i class="fa fa-qq"></i></a>
+                        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=gbiysbG0tbWyuMHw8K-i7uw" class="email" target="_blank" title="930054439@qq.com"><i class="fa fa-envelope"></i></a>
+                        <a href="javascript:void(0)" class="weixin"><i class="fa fa-weixin"></i></a>
+                    </div>
+                    <p class="mt05">
+                        Copyright &copy; 2018-2018 燕十三 All Rights Reserved V.1.0.0 蜀ICP备18008600号
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="layui/layui.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/plugins/nprogress.js"></script>
+    <script>NProgress.start();</script>
+ 	<script src="js/article.js"></script>
+    <script>
+        window.onload = function () {
+            NProgress.done();
+        };
+    </script>
+</body>
+</html>
