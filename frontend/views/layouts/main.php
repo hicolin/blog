@@ -18,7 +18,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width" />
     <meta name="author" content="colin" />
     <meta name="robots" content="all" />
-    <title>Colin 博客</title>
+    <title><?= $this->title ?> - Colin 博客</title>
     <link rel="shortcut icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon" />
     <?php $this->head() ?>
 
@@ -60,13 +60,13 @@ AppAsset::register($this);
         <div class="copyright">
             <div class="info">
                 <div class="contact">
-                    <a href="javascript:void(0)" class="github" target="_blank"><i class="fa fa-github"></i></a>
-                    <a href="https://wpa.qq.com/msgrd?v=3&uin=930054439&site=qq&menu=yes" class="qq" target="_blank" title="930054439"><i class="fa fa-qq"></i></a>
-                    <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=gbiysbG0tbWyuMHw8K-i7uw" class="email" target="_blank" title="930054439@qq.com"><i class="fa fa-envelope"></i></a>
-                    <a href="javascript:void(0)" class="weixin"><i class="fa fa-weixin"></i></a>
+                    <a href="https://gitee.com/colin_2048" class="github" target="_blank"><i class="fa fa-github"></i></a>
+                    <a href="https://wpa.qq.com/msgrd?v=3&uin=811687790&site=qq&menu=yes" class="qq" target="_blank" title="811687790"><i class="fa fa-qq"></i></a>
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=XzwwMzYxAG5vbWsfLi5xPDAy" class="email" target="_blank" title="811687790@qq.com"><i class="fa fa-envelope"></i></a>
+                    <a href="<?= Url::to(['index/about']) ?>" class="weixin"><i class="fa fa-weixin"></i></a>
                 </div>
                 <p class="mt05">
-                    Copyright &copy; 2019-2019 Colin All Rights Reserved <br/>Version: 1.0.0
+                    Copyright &copy; 2019-<?= date('Y') ?> Colin All Rights Reserved <br/>Version: 1.0.0
                 </p>
             </div>
         </div>

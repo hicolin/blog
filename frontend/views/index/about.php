@@ -1,49 +1,45 @@
+<?php
+use yii\helpers\Url;
+?>
 <div class="doc-container" id="doc-container">
     <div class="container-fixed zoomIn">
         <div class="container-inner">
             <article>
                 <section>
                     <h1>关于我</h1>
-                    <p>
-                        毕业后在古都西安某个工厂装盒子，很迷茫。2015年离开西安到成都转行做开发，然沉迷撸码，日渐消瘦。
-                    </p>
-                    <span>
-                    可以通过以下方式联系到我：
-                </span>
+                    <p>90后，PHP程序员一枚。大学毕业后，怀着对互联网的一丝热情，毅然决定转行。此前，也做过一些设计相关的工作。</p>
+                    <p style="margin-top: -15px">憧憬着有一天可以实现财务自由，周游世界。。。 咳咳，好像扯得有点远了<img src="<?= Url::to('@web/layui/images/face/2.gif') ?>" alt="[哈哈]"></p>
+                    <span>可以通过以下方式联系到我：</span>
                     <ul>
-                        <li>邮 箱 ：<a href="mailto:930054439@qq.com">930054439@qq.com</a></li>
-                        <li>码 云 ：<a href="https://gitee.com/yssgit/events" target="_blank">https://gitee.com/yssgit/events</a></li>
+                        <li>昵 称 ：<code>Colin</code></li>
+                        <li>Q&nbsp;&nbsp;Q ：<a href="https://wpa.qq.com/msgrd?v=3&uin=811687790&site=qq&menu=yes" class="qq" target="_blank" title="811687790">811687790</a></li>
+                        <li>邮 箱 ：<a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=XzwwMzYxAG5vbWsfLi5xPDAy">811687790@qq.com</a></li>
+                        <li>码 云 ：<a href="https://gitee.com/colin_2048" target="_blank">https://gitee.com/colin_2048</a></li>
+                        <li>微信 ：<p><img style="width: 120px; height: 120px" src="<?= Url::to('@web/image/wx_avatar.jpg') ?>" alt=""></p></li>
                     </ul>
                 </section>
                 <section>
                     <h1>关于本站</h1>
                     <p>
-                        本站建于2018年4月，主要用于记录学习笔记，技术分享、交流。
+                        本站建于2019年8月，主要用于记录学习笔记，技术分享、交流。
                     </p>
                     <span>
                     本站结构：
                 </span>
                     <ul>
                         <li>前 端 ：<code>Layui</code></li>
-                        <li>后 端 ：<code>MVC5 + MYSQL</code></li>
+                        <li>后 端 ：<code>Yii2 + MYSQL</code></li>
                     </ul>
                     <p>
-                        本站采用阿里云提供的服务器ESC和存储对象OSS。
-                    </p>
-                </section>
-                <section>
-                    <h1>关于版权</h1>
-                    <p>
-                        本站采用「 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" target="_blank">署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)</a>」创作共享协议。
-                        只要在使用时注明出处，那么您可以可以对本站所有原创内容进行转载、节选、二次创作，但是您不得对其用于商业目的。
+                        前端模板来自于 <code>燕十三</code>，链接： <a href="https://gitee.com/yssgit">https://gitee.com/yssgit</a>。 自己在原有的基础上，结合自己的需要，做了一些修改。
                     </p>
                 </section>
                 <section>
                     <h1>特别说明</h1>
                     <ul>
                         <li>本站文章仅代表个人观点，和任何组织或个人无关。</li>
+                        <li>用户QQ仅作回复消息用，不对外使用。</li>
                         <li>本站前端开发代码没有考虑对IE浏览器的兼容。</li>
-                        <li>用户邮箱仅作回复消息用，不对外使用。</li>
                     </ul>
                     <br><br>
                     <div>
