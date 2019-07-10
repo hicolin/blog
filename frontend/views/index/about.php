@@ -15,7 +15,7 @@ use yii\helpers\Url;
                         <li>Q&nbsp;&nbsp;Q ：<a href="https://wpa.qq.com/msgrd?v=3&uin=811687790&site=qq&menu=yes" class="qq" target="_blank" title="811687790">811687790</a></li>
                         <li>邮 箱 ：<a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=XzwwMzYxAG5vbWsfLi5xPDAy">811687790@qq.com</a></li>
                         <li>码 云 ：<a href="https://gitee.com/colin_2048" target="_blank">https://gitee.com/colin_2048</a></li>
-                        <li>微信 ：<p><img style="width: 120px; height: 120px" src="<?= Url::to('@web/image/wx_avatar.jpg') ?>" alt=""></p></li>
+                        <li>微 信 ：<p><img style="width: 120px; height: 120px" src="<?= Url::to('@web/image/wx_avatar.jpg') ?>" alt=""></p></li>
                     </ul>
                 </section>
                 <section>
@@ -39,7 +39,6 @@ use yii\helpers\Url;
                     <ul>
                         <li>本站文章仅代表个人观点，和任何组织或个人无关。</li>
                         <li>用户QQ仅作回复消息用，不对外使用。</li>
-                        <li>本站前端开发代码没有考虑对IE浏览器的兼容。</li>
                     </ul>
                     <br><br>
                     <div>

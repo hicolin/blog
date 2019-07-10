@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b09f81a-a10f-403e-b356-398a30f3d3b6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/controllers/BaseController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/image/wx_avatar.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/blog.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blog.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/controllers/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/index/about.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/index/about.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views/layouts/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views/layouts/main.php" afterDir="false" />
-    </list>
+    <list default="true" id="2b09f81a-a10f-403e-b356-398a30f3d3b6" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +12,7 @@
     <session id="381577411">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.opened" value="2" />
@@ -82,8 +74,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/views/index/about.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="41" column="55" lean-forward="true" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
+            <state relative-caret-position="1019">
+              <caret line="50" column="10" lean-forward="true" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
               <folding>
                 <element signature="n#style#0;n#p#1;n#section#0;n#article#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="e#634#640#0#HTML" expanded="true" />
@@ -254,15 +246,15 @@
       <updated>1562329021610</updated>
       <workItem from="1562329023155" duration="12946000" />
       <workItem from="1562632454317" duration="497000" />
-      <workItem from="1562643515696" duration="9547000" />
+      <workItem from="1562643515696" duration="9803000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22990000" />
+    <option name="totallyTimeSpent" value="23246000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" id="Project" order="0" visible="true" weight="0.12153518" />
@@ -523,8 +515,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/views/index/about.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="41" column="55" lean-forward="true" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
+        <state relative-caret-position="1019">
+          <caret line="50" column="10" lean-forward="true" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
           <folding>
             <element signature="n#style#0;n#p#1;n#section#0;n#article#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="e#634#640#0#HTML" expanded="true" />
