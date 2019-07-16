@@ -59,4 +59,23 @@ class Article extends Base
             'create_time' => '创建时间',
         ];
     }
+    
+    public static function getFlags()
+    {
+        $flags = [1 => '原创', 2 => '转载'];
+        return $flags;
+    }
+
+    public static function getTypes()
+    {
+        $types = [1 => '后端', 2 => '前端', 3 => '运维', 4 => '杂项'];
+        return $types;
+    }
+
+    public static function getStatus()
+    {
+        $status = [1 => '显示', 2 => '隐藏'];
+        return $status;
+    }
+
 }

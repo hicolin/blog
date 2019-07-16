@@ -27,16 +27,23 @@ class ArticleController extends BaseController
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        return $this->render('index', compact('models', 'pagination', 'search'));
+        $flagArr = Article::getFlags();
+        $typeArr = Article::getTypes();
+        $statusArr = Article::getStatus();
+        $data = compact('models', 'pagination', 'search', 'flagArr', 'typeArr', 'statusArr');
+        return $this->render('index', $data);
     }
 
     public function condition($query, $search)
     {
-        if (isset($search['nickname']) && $search['nickname']) {
-            $query = $query->andWhere(['like', 'nickname', $search['nickname']]);
+        if (isset($search['title']) && $search['title']) {
+            $query = $query->andWhere(['like', 'title', $search['title']]);
         }
-        if (isset($search['tel']) && $search['tel']) {
-            $query = $query->andWhere(['like', 'tel', $search['tel']]);
+        if (isset($search['type']) && $search['type']) {
+            $query = $query->andWhere(['type' => $search['type']]);
+        }
+        if (isset($search['status']) && $search['status']) {
+            $query = $query->andWhere(['status' => $search['status']]);
         }
         if (isset($search['b_time']) && $search['b_time']) {
             $bTime = strtotime($search['b_time'] . ' 00:00:00');
@@ -51,6 +58,8 @@ class ArticleController extends BaseController
 
     public function actionCreate()
     {
+        $flagArr = Article::getFlags();
+        $typeArr = Article::getTypes();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $model = new Article();
@@ -60,7 +69,7 @@ class ArticleController extends BaseController
             }
             return $this->json(200, $res['msg']);
         }
-        return $this->render('create');
+        return $this->render('create', compact('flagArr', 'typeArr'));
     }
 
     public function actionUpdate()
