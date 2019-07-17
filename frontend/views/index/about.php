@@ -2,8 +2,8 @@
 use yii\helpers\Url;
 ?>
 <div class="doc-container" id="doc-container">
-    <div class="container-fixed zoomIn">
-        <div class="container-inner">
+    <div class="container-fixed">
+        <div class="container-inner wow lightSpeedIn"> <!--rollIn-->
             <article>
                 <section>
                     <h1>关于我</h1>

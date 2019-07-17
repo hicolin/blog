@@ -196,7 +196,7 @@ use yii\helpers\Url;
         </div>
         <div class="col-other">
             <div class="inner">
-                <div class="other-item" id="categoryandsearch">
+                <div class="other-item wow swing" id="categoryandsearch">
                     <div class="search">
                         <label class="search-wrap">
                             <input type="text" id="searchtxt" placeholder="输入关键字搜索" />
@@ -217,7 +217,7 @@ use yii\helpers\Url;
                 </div>
                 <!--遮罩-->
                 <div class="blog-mask animated layui-hide" style="visibility: hidden"></div>
-                <div class="other-item">
+                <div class="other-item wow swing">
                     <h5 class="other-item-title">热门文章</h5>
                     <div class="inner">
                         <ul class="hot-list-article">
@@ -232,7 +232,7 @@ use yii\helpers\Url;
                         </ul>
                     </div>
                 </div>
-                <div class="other-item">
+                <div class="other-item wow swing">
                     <h5 class="other-item-title">最近访客</h5>
                     <div class="inner">
                         <dl class="vistor">

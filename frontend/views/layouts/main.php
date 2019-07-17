@@ -82,7 +82,7 @@ AppAsset::register($this);
     window.onload = function () {
         NProgress.done();
     };
-    // new WOW().init();
+    new WOW().init();
 </script>
 </body>
 </html>

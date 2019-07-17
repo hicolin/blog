@@ -1,6 +1,6 @@
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">
-        <div class="container-inner">
+        <div class="container-inner wow flipInX">
             <section class="msg-remark">
                 <h1>留言板</h1>
                 <p>
