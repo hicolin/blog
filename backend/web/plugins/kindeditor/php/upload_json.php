@@ -14,11 +14,11 @@ $php_url = dirname($_SERVER['PHP_SELF']) . '/';
 
 //文件保存目录路径
 //$save_path = $php_path . '../attached/';
-$save_path = $php_path . '../uploads/kindEditor/';
+$save_path = $php_path . '../../../uploads/kindEditor/'; // 图片上传目录
 is_dir($save_path) || mkdir($save_path, 0755, true);
 //文件保存目录URL
 //$save_url = $php_url . '../attached/';
-$save_url = $php_url . '../uploads/kindEditor/';
+$save_url = $php_url . '../../../uploads/kindEditor/'; // 与图片上传目录保持一致
 //定义允许上传的文件扩展名
 $ext_arr = array(
 	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),

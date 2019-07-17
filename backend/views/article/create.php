@@ -56,7 +56,7 @@ use yii\helpers\Url;
         <div class="layui-form-item">
             <label for="content" class="layui-form-label">内容</label>
             <div class="layui-input-block">
-                <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <textarea name="content" placeholder="请输入内容" style="width: 760px; height: 250px" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
