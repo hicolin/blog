@@ -1,49 +1,63 @@
 <?php
 use yii\helpers\Url;
 ?>
+
+<script src="<?= Url::to('@web/plugins/kindeditor/kindeditor-all.js') ?>"></script>
+<script src="<?= Url::to('@web/plugins/kindeditor/lang/zh-CN.js') ?>"></script>
+<style>
+    .layui-form-item .layui-input-inline{width: 380px }
+</style>
+
 <div class="x-body layui-anim layui-anim-up">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="nickname" class="layui-form-label">昵称</label>
+            <label for="title" class="layui-form-label">标题</label>
             <div class="layui-input-inline">
                 <input type="hidden" name="id" value="<?= $model['id'] ?>">
-                <input type="text" id="nickname" name="nickname" autocomplete="off" class="layui-input" value="<?= $model['nickname'] ?>">
+                <input type="text" name="title" autocomplete="off" class="layui-input" value="<?= $model['title'] ?>">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="email" class="layui-form-label">邮箱</label>
+            <label for="keyword" class="layui-form-label">关键字</label>
             <div class="layui-input-inline">
-                <input type="text" id="email" name="email" autocomplete="off" class="layui-input" value="<?= $model['email'] ?>">
+                <input type="text" name="keyword" autocomplete="off" class="layui-input" value="<?= $model['keyword'] ?>">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="tel" class="layui-form-label">
-                <span class="x-red">*</span> 手机号码
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="tel" name="tel" required="" lay-verify="phone"
-                       autocomplete="off" class="layui-input" value="<?= $model['tel'] ?>">
+            <div class="layui-inline">
+                <label for="flag" class="layui-form-label">标识</label>
+                <div class="layui-input-inline">
+                    <select name="flag">
+                        <?php foreach ($flagArr as $k => $v): ?>
+                            <option value="<?= $k ?>" <?= $model['flag'] == $k ? 'selected' : '' ?>><?= $v ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span> 将会成为您唯一的登入名
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label for="type" class="layui-form-label">类型</label>
+                <div class="layui-input-inline">
+                    <select name="type">
+                        <?php foreach ($typeArr as $k => $v): ?>
+                            <option value="<?= $k ?>" <?= $model['type'] == $k ? 'selected' : '' ?>><?= $v ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="radio" value="1" name="status" lay-skin="primary" title="启用" <?= $model['status'] == 1 ? 'checked' : '' ?>>
-                <input type="radio" value="2" name="status" lay-skin="warning" title="禁用" <?= $model['status'] == 2 ? 'checked' : '' ?>>
+                <input type="radio" value="1" name="status" lay-skin="primary" title="显示" <?= $model['status'] == 1 ? 'checked' : '' ?>>
+                <input type="radio" value="2" name="status" lay-skin="warning" title="隐藏" <?= $model['status'] == 2 ? 'checked' : '' ?>>
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="pwd" class="layui-form-label">
-                密码
-            </label>
-            <div class="layui-input-inline">
-                <input type="password" id="pwd" name="pwd" autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span> 默认为空，表示不更新密码
+            <label for="content" class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="请输入内容" style="width: 760px; height: 250px" class="layui-textarea"><?= htmlspecialchars_decode($model['content']) ?></textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -58,14 +72,18 @@ use yii\helpers\Url;
 
 <?php $this->beginBlock('footer') ?>
 <script>
+    KindEditor.ready(function (K) {
+        window.editor = K.create('textarea[name="content"]');
+    });
+
     layui.use(['form','layer'], function(){
         $ = layui.jquery;
         var form = layui.form ,layer = layui.layer;
 
         //监听提交
         form.on('submit(update)', function(data){
-            layer.load(3);
-            $.post('<?= Url::to(['member/update']) ?>', data.field, function (res) {
+            data.field.content = editor.html();
+            $.post('<?= Url::to([$this->context->id . '/update']) ?>', data.field, function (res) {
                 layer.closeAll();
                 if (res.status === 200) {
                     layer.msg(res.msg, {icon: 1,time: 1500}, function () {

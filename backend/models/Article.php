@@ -78,4 +78,39 @@ class Article extends Base
         return $status;
     }
 
+    public function create($data)
+    {
+        $this->title = $data['title'];
+        $this->keyword = $data['keyword'];
+        $this->flag = $data['flag'];
+        $this->type = $data['type'];
+        $this->status = $data['status'];
+        $this->content = htmlspecialchars($data['content']);
+        $this->view_num = 0;
+        $this->comment_num = 0;
+        $this->create_time = time();
+        if (!$this->save()) {
+            $error = array_values($this->getFirstErrors())[0];
+            return $this->arrData(100, $error);
+        }
+        return $this->arrData(200, '添加成功');
+    }
+
+    public function edit($data)
+    {
+        $model = self::findOne($data['id']);
+        $model->title = $data['title'];
+        $model->keyword = $data['keyword'];
+        $model->flag = $data['flag'];
+        $model->type = $data['type'];
+        $model->status = $data['status'];
+        $model->content = htmlspecialchars($data['content']);
+        if (!$model->save()) {
+            $error = array_values($model->getFirstErrors())[0];
+            return $this->arrData(100, $error);
+        }
+        return $this->arrData(200, '更新成功');
+    }
+
+
 }

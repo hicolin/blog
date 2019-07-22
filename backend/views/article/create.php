@@ -72,7 +72,7 @@ use yii\helpers\Url;
 <?php $this->beginBlock('footer') ?>
 <script>
     KindEditor.ready(function (K) {
-        var editor = K.create('textarea[name="content"]');
+        window.editor = K.create('textarea[name="content"]');
     });
 
     layui.use(['form','layer'], function(){
@@ -81,8 +81,8 @@ use yii\helpers\Url;
 
         //监听提交
         form.on('submit(add)', function(data){
-            layer.load(3);
-            $.post('<?= Url::to(['member/create']) ?>', data.field, function (res) {
+            data.field.content = editor.html();
+            $.post('<?= Url::to([$this->context->id . '/create']) ?>', data.field, function (res) {
                 layer.closeAll();
                 if (res.status === 200) {
                     layer.msg(res.msg, {icon: 1,time: 1500}, function () {

@@ -76,6 +76,8 @@ class ArticleController extends BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = Article::findOne($id);
+        $flagArr = Article::getFlags();
+        $typeArr = Article::getTypes();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $model = new Article();
@@ -85,21 +87,7 @@ class ArticleController extends BaseController
             }
             return $this->json(200, $res['msg']);
         }
-        return $this->render('update', compact('model'));
-    }
-
-    public function actionChangeStatus()
-    {
-        if (Yii::$app->request->isPost) {
-            $post = Yii::$app->request->post();
-            $member = Article::findOne($post['id']);
-            $status = $post['status'] == 1 ? 2 : 1;
-            $member->status = $status;
-            if (!$member->save(false)){
-                return $this->json(100, '操作失败');
-            }
-            return $this->json(200, '操作成功');
-        }
+        return $this->render('update', compact('model', 'flagArr', 'typeArr'));
     }
 
     public function actionDel()

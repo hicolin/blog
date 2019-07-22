@@ -24,5 +24,4 @@
             $(this).attr({ 'data-mark': "false" });
         }
     });
-
 });
