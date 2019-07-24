@@ -8,6 +8,7 @@
 namespace frontend\controllers;
 
 
+use backend\models\Article;
 use Yii;
 
 class IndexController extends BaseController
@@ -17,9 +18,25 @@ class IndexController extends BaseController
     public function actionIndex()
     {
         $type = (int)Yii::$app->request->get('type');
-        if ($type && !in_array($type, range(1,4))) return $this->redirect('/');
+        $page = (int)Yii::$app->request->get('page');
+        if (!$page) $page = 1;
+        if ($type && !in_array($type, range(1,4))) {
+            return $this->redirect('/');
+        }
         $this->view->title = $this->getCateTitle($type);
-        return $this->render('index');
+        $query = Article::find()->orderBy('create_time desc');
+        if ($type) $query->where(['type' => $type]);
+        $count = $query->count();
+        $pageSize = 10;
+        $pages = ceil($count / $pageSize);
+        $offset = ($page - 1) * $pageSize;
+        $data = $query->offset($offset)->limit(10)->asArray()->all();
+        $data = Article::mFormatData($data);
+        if (Yii::$app->request->isAjax) {
+            $res = compact('data', 'pages');
+            return $this->json(200, $res);
+        }
+        return $this->render('index', compact('type'));
     }
 
     public function actionArticle()

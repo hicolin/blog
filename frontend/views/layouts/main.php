@@ -54,7 +54,9 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
+
 <?= $content ?>
+
 <footer class="grid-footer">
     <div class="footer-fixed">
         <div class="copyright">
@@ -74,9 +76,6 @@ AppAsset::register($this);
 </footer>
 <?php $this->endBody() ?>
 
-<?php if (isset($this->blocks['footer'])): ?>
-    <?= $this->blocks['footer']; ?>
-<?php endif; ?>
 <script>
     NProgress.start();
     window.onload = function () {
@@ -84,6 +83,11 @@ AppAsset::register($this);
     };
     new WOW().init();
 </script>
+
+<?php if (isset($this->blocks['footer'])): ?>
+    <?= $this->blocks['footer']; ?>
+<?php endif; ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>

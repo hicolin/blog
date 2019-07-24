@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "colin_article".
@@ -59,7 +60,7 @@ class Article extends Base
             'create_time' => '创建时间',
         ];
     }
-    
+
     public static function getFlags()
     {
         $flags = [1 => '原创', 2 => '转载'];
@@ -110,6 +111,16 @@ class Article extends Base
             return $this->arrData(100, $error);
         }
         return $this->arrData(200, '更新成功');
+    }
+
+
+    public static function mFormatData($data)
+    {
+        foreach ($data as &$list) {
+            $list['url'] = Url::to(['index/article', 'id' => $list['id']]);
+            $list['pic'] = Url::to('@web/image/cover/2019121192339714.png');
+        }
+        return $data;
     }
 
 
