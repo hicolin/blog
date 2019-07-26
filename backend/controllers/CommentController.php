@@ -6,15 +6,15 @@
 
 namespace backend\controllers;
 
-use backend\models\Member;
+use backend\models\Comment;
 use Yii;
 use yii\data\Pagination;
 
-class MemberController extends BaseController
+class CommentController extends BaseController
 {
     public function actionIndex()
     {
-        $query = Member::find();
+        $query = Comment::find()->joinWith('member');
         $search = Yii::$app->request->get('search');
         $query = $this->condition($query, $search);
         $countQuery = clone $query;
@@ -53,7 +53,7 @@ class MemberController extends BaseController
     {
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $model = new Member();
+            $model = new Comment();
             $res = $model->create($post);
             if ($res['status'] != 200) {
                 return $this->json(100, $res['msg']);
@@ -66,10 +66,10 @@ class MemberController extends BaseController
     public function actionUpdate()
     {
         $id = Yii::$app->request->get('id');
-        $model = Member::findOne($id);
+        $model = Comment::findOne($id);
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $model = new Member();
+            $model = new Comment();
             $res = $model->edit($post);
             if ($res['status'] != 200) {
                 return $this->json(100, $res['msg']);
@@ -83,10 +83,10 @@ class MemberController extends BaseController
     {
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $member = Member::findOne($post['id']);
+            $Comment = Comment::findOne($post['id']);
             $status = $post['status'] == 1 ? 2 : 1;
-            $member->status = $status;
-            if (!$member->save(false)){
+            $Comment->status = $status;
+            if (!$Comment->save(false)){
                 return $this->json(100, '操作失败');
             }
             return $this->json(200, '操作成功');
@@ -96,7 +96,7 @@ class MemberController extends BaseController
     public function actionDel()
     {
         $id = (int)Yii::$app->request->get('id');
-        $model = Member::findOne($id);
+        $model = Comment::findOne($id);
         $res = $model->delete();
         if (!$res) {
             return $this->json(100, '删除失败');
@@ -107,7 +107,7 @@ class MemberController extends BaseController
     public function actionBatchDel()
     {
         $idArr = Yii::$app->request->get('idArr');
-        $res = Member::deleteAll(['in', 'id', $idArr]);
+        $res = Comment::deleteAll(['in', 'id', $idArr]);
         if (!$res) {
             return $this->json(100, '批量删除失败');
         }

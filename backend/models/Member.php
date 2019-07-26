@@ -8,9 +8,7 @@ use Yii;
  *
  * @property string $id 前台用户表
  * @property string $nickname 昵称
- * @property string $tel 手机号
- * @property string $password 密码
- * @property string $email 邮箱
+ * @property string $qq QQ
  * @property int $status 状态 1:启用 2:禁用
  * @property int $create_time 创建时间
  */
@@ -31,9 +29,9 @@ class Member extends Base
     {
         return [
             [['status', 'create_time'], 'integer'],
-            [['nickname', 'password', 'email'], 'string', 'max' => 100],
-            [['tel'], 'string', 'max' => 15],
-            [['tel', 'email'], 'unique']
+            [['nickname'], 'string', 'max' => 100],
+            [['qq'], 'string', 'max' => 15],
+            [['qq'], 'unique']
         ];
     }
 
@@ -45,9 +43,7 @@ class Member extends Base
         return [
             'id' => 'ID',
             'nickname' => '昵称',
-            'tel' => '手机号码',
-            'password' => '密码',
-            'email' => '邮箱',
+            'qq' => 'QQ',
             'status' => '状态',
             'create_time' => '创建时间',
         ];
@@ -56,9 +52,7 @@ class Member extends Base
     public function create($data)
     {
         $this->nickname = $data['nickname'];
-        $this->email = $data['email'];
-        $this->tel = $data['tel'];
-        $this->password = Yii::$app->security->generatePasswordHash($data['pwd']);
+        $this->qq = $data['qq'];
         $this->status = $data['status'];
         $this->create_time = time();
         if (!$this->save()) {
@@ -72,12 +66,8 @@ class Member extends Base
     {
         $model = self::findOne($data['id']);
         $model->nickname = $data['nickname'];
-        $model->email = $data['email'];
-        $model->tel = $data['tel'];
+        $model->qq = $data['qq'];
         $model->status = $data['status'];
-        if ($data['pwd']) {
-            $model->password = Yii::$app->security->generatePasswordHash($data['pwd']);
-        }
         if (!$model->save()) {
             $error = array_values($model->getFirstErrors())[0];
             return $this->arrData(100, $error);

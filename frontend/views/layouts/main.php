@@ -34,10 +34,10 @@ AppAsset::register($this);
 <header class="gird-header">
     <div class="header-fixed">
         <div class="header-inner">
-            <a href="<?= Url::to(['index/index']) ?>" class="header-logo" id="logo">Mr.Colin</a>
+            <a href="<?= Url::to('/') ?>" class="header-logo" id="logo">Mr.Colin</a>
             <nav class="nav" id="nav">
                 <ul>
-                    <li><a href="<?= Url::to(['index/index']) ?>">首页</a></li>
+                    <li><a href="<?= Url::to('/') ?>">首页</a></li>
                     <li><a href="<?= Url::to(['index/index', 'type' => 1]) ?>">后端</a></li>
                     <li><a href="<?= Url::to(['index/index', 'type' => 2]) ?>">前端</a></li>
                     <li><a href="<?= Url::to(['index/index', 'type' => 3]) ?>">运维</a></li>

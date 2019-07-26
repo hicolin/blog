@@ -6,191 +6,6 @@ use yii\helpers\Url;
         <div class="col-content">
             <div class="inner">
                 <article class="article-list bloglist" id="LAY_bloglist" >
-                    <section class="article-item zoomIn article">
-                        <div class="fc-flag">后端</div>
-                        <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="<?= Url::to(['index/article', 'id' => 1]) ?>">.NET Spire.Doc组件</a>
-                        </h5>
-                        <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
-                        </div>
-                        <div class="content">
-                            <a href="<?= Url::to(['index/article', 'id' => 1]) ?>" class="cover img-light">
-                                <img src="<?= Url::to('@web/image/cover/2019121192339714.png') ?>">
-                            </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
-                        </div>
-                        <div class="read-more">
-                            <a href="<?= Url::to(['index/article', 'id' => 1]) ?>" class="fc-black f-fwb">继续阅读</a>
-                        </div>
-                        <aside class="f-oh footer">
-                            <div class="f-fl tags">
-                                <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
-                            </div>
-                            <div class="f-fr">
-									<span class="read">
-										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
-									</span>
-                                <span class="ml20">
-										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
-									</span>
-                            </div>
-                        </aside>
-                    </section>
-                    <section class="article-item zoomIn article">
-                        <div class="fc-flag">前端</div>
-                        <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="/Blog/Read/16">.NET Spire.Doc组件</a>
-                        </h5>
-                        <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
-                        </div>
-                        <div class="content">
-                            <a href="/Blog/Read/16" class="cover img-light">
-                                <img src="<?= Url::to('@web/image/cover/2019121192339714.png') ?>">
-                            </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
-                        </div>
-                        <div class="read-more">
-                            <a href="/Blog/Read/16" class="fc-black f-fwb">继续阅读</a>
-                        </div>
-                        <aside class="f-oh footer">
-                            <div class="f-fl tags">
-                                <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
-                            </div>
-                            <div class="f-fr">
-									<span class="read">
-										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
-									</span>
-                                <span class="ml20">
-										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
-									</span>
-                            </div>
-                        </aside>
-                    </section>
-                    <section class="article-item zoomIn article">
-                        <div class="fc-flag">运维</div>
-                        <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="/Blog/Read/16">.NET Spire.Doc组件</a>
-                        </h5>
-                        <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
-                        </div>
-                        <div class="content">
-                            <a href="/Blog/Read/16" class="cover img-light">
-                                <img src="<?= Url::to('@web/image/cover/2019121192339714.png') ?>">
-                            </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
-                        </div>
-                        <div class="read-more">
-                            <a href="/Blog/Read/16" class="fc-black f-fwb">继续阅读</a>
-                        </div>
-                        <aside class="f-oh footer">
-                            <div class="f-fl tags">
-                                <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
-                            </div>
-                            <div class="f-fr">
-									<span class="read">
-										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
-									</span>
-                                <span class="ml20">
-										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
-									</span>
-                            </div>
-                        </aside>
-                    </section>
-                    <section class="article-item zoomIn article">
-                        <div class="fc-flag">杂项</div>
-                        <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="/Blog/Read/16">.NET Spire.Doc组件</a>
-                        </h5>
-                        <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
-                        </div>
-                        <div class="content">
-                            <a href="/Blog/Read/16" class="cover img-light">
-                                <img src="<?= Url::to('@web/image/cover/2019121192339714.png') ?>">
-                            </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
-                        </div>
-                        <div class="read-more">
-                            <a href="/Blog/Read/16" class="fc-black f-fwb">继续阅读</a>
-                        </div>
-                        <aside class="f-oh footer">
-                            <div class="f-fl tags">
-                                <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
-                            </div>
-                            <div class="f-fr">
-									<span class="read">
-										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
-									</span>
-                                <span class="ml20">
-										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
-									</span>
-                            </div>
-                        </aside>
-                    </section>
-                    <section class="article-item zoomIn article">
-                        <div class="fc-flag">置顶</div>
-                        <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="/Blog/Read/16">.NET Spire.Doc组件</a>
-                        </h5>
-                        <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
-                        </div>
-                        <div class="content">
-                            <a href="/Blog/Read/16" class="cover img-light">
-                                <img src="<?= Url::to('@web/image/cover/2019121192339714.png') ?>">
-                            </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
-                        </div>
-                        <div class="read-more">
-                            <a href="/Blog/Read/16" class="fc-black f-fwb">继续阅读</a>
-                        </div>
-                        <aside class="f-oh footer">
-                            <div class="f-fl tags">
-                                <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
-                            </div>
-                            <div class="f-fr">
-									<span class="read">
-										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
-									</span>
-                                <span class="ml20">
-										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
-									</span>
-                            </div>
-                        </aside>
-                    </section>
                 </article>
             </div>
         </div>
@@ -208,11 +23,11 @@ use yii\helpers\Url;
                     </div>
                     <ul class="category mt20" id="category">
                         <li data-index="0" class="slider"></li>
-                        <li data-index="1"><a href="/Blog/Article">全部文章<span class="article-count" style="color: #2ea7e0">123</span></a></li>
-                        <li data-index="2"><a href="/Blog/Article/1/">后端<span class="article-count">13</span></a></li>
-                        <li data-index="3"><a href="/Blog/Article/2/">前端<span class="article-count">25</span></a></li>
-                        <li data-index="4"><a href="/Blog/Article/3/">运维<span class="article-count">0</span></a></li>
-                        <li data-index="5"><a href="/Blog/Article/4/">杂项<span class="article-count">12</span></a></li>
+                        <li data-index="1"><a href="<?= Url::to('/') ?>">全部文章<span class="article-count" style="color: #2ea7e0"><?= $articleNum['all'] ?></span></a></li>
+                        <li data-index="2"><a href="<?= Url::to(['index/index', 'type' => 1]) ?>">后端<span class="article-count"><?= $articleNum['backend'] ?></span></a></li>
+                        <li data-index="3"><a href="<?= Url::to(['index/index', 'type' => 2]) ?>">前端<span class="article-count"><?= $articleNum['frontend'] ?></span></a></li>
+                        <li data-index="4"><a href="<?= Url::to(['index/index', 'type' => 3]) ?>">运维<span class="article-count"><?= $articleNum['linux'] ?></span></a></li>
+                        <li data-index="5"><a href="<?= Url::to(['index/index', 'type' => 4]) ?>">杂项<span class="article-count"><?= $articleNum['other'] ?></span></a></li>
                     </ul>
                 </div>
                 <!--遮罩-->
@@ -265,12 +80,11 @@ use yii\helpers\Url;
         var flow = layui.flow;
         flow.load({
             elem: '#LAY_bloglist',
-            isAuto: false,
-            mb: 200,
+            isLazyimg: true,
             done: function (page, next) {
                 var list = [];
-                $.get('<?= Url::to(['index/index', 'type' => $type])?>' + '&page=' + page, function (res) {
-                    console.log(res);
+                $.get('<?= Url::to(['index/index'])?>', {type: type, page: page}, function (res) {
+                    res = res.data;
                     layui.each(res.data, function (index, item) {
                         var html = '';
                         html = jointSingleHtml(html, item);
@@ -280,26 +94,26 @@ use yii\helpers\Url;
                 }, 'json')
             }
         })
-    })
+    });
 
     function jointSingleHtml(html, item) {
         html = `
             <section class="article-item zoomIn article">
-                        <div class="fc-flag">后端</div>
+                        <div class="fc-flag">${item.type}</div>
                         <h5 class="title">
-                            <span class="fc-blue">【原创】</span>
-                            <a href="${item.url}">.NET Spire.Doc组件</a>
+                            <span class="fc-blue">【${item.flag}】</span>
+                            <a href="${item.url}">${item.title}</a>
                         </h5>
                         <div class="time">
-                            <span class="day">21</span>
-                            <span class="month fs-18">1<span class="fs-14">月</span></span>
-                            <span class="year fs-18 ml10">2019</span>
+                            <span class="day">${item.day}</span>
+                            <span class="month fs-18">${item.month}<span class="fs-14">月</span></span>
+                            <span class="year fs-18 ml10">${item.year}</span>
                         </div>
                         <div class="content">
                             <a href="${item.url}" class="cover img-light">
-                                <img src="${item.pic}">
+                                <img lay-src="${item.pic}">
                             </a>
-                            Spire.Doc for .NET是一款由E-iceblue公司开发的专业的Word .NET类库，使用该工具开发人员可以在任意.NET平台（C#，VB.NET，ASP.NET）上快速创建，读取，写入，转换，打印Word文档。作为一个独立的Word 组件，Spire.Doc的运行无需安装Microsoft Word。而且，它可以将Microsoft Word文档创建功能集成到开发者的任何.NET应用程序。
+                            ${item.summary}
                         </div>
                         <div class="read-more">
                             <a href="${item.url}" class="fc-black f-fwb">继续阅读</a>
@@ -307,21 +121,22 @@ use yii\helpers\Url;
                         <aside class="f-oh footer">
                             <div class="f-fl tags">
                                 <span class="fa fa-tags fs-16"></span>
-                                <a class="tag">ASP.NET MVC</a>
+                                <a class="tag">${item.keyword}</a>
                             </div>
                             <div class="f-fr">
 									<span class="read">
 										<i class="fa fa-eye fs-16"></i>
-										<i class="num">57</i>
+										<i class="num">${item.view_num}</i>
 									</span>
                                 <span class="ml20">
 										<i class="fa fa-comments fs-16"></i>
-										<a href="javascript:void(0)" class="num fc-grey">1</a>
+										<a href="javascript:void(0)" class="num fc-grey">${item.comment_num}</a>
 									</span>
                             </div>
                         </aside>
                     </section>
         `;
+        return html;
     }
 </script>
 <?php $this->endBlock() ?>

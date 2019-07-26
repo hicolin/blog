@@ -1,3 +1,12 @@
+<?php
+use yii\helpers\Url;
+?>
+<style>
+    @media screen and (max-width: 500px){
+        .artiledetail img{width: 100%};
+    }
+</style>
+
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">
         <div class="col-content" style="width:100%">
@@ -6,47 +15,35 @@
                     <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid" />
                     <section class="article-item">
                         <aside class="title" style="line-height:1.5;">
-                            <h4>使用码云和VS托管本地代码</h4>
+                            <h4><?= $article['title'] ?></h4>
                             <p class="fc-grey fs-14">
                                 <small>
-                                    作者：<a href="javascript:void(0)" target="_blank" class="fc-link">燕十三</a>
+                                    作者：<a href="javascript:void(0)" target="_blank" class="fc-link">Colin</a>
                                 </small>
-                                <small class="ml10">围观群众：<i class="readcount">37</i></small>
-                                <small class="ml10">更新于 <label>2018-05-22:17:30:24</label> </small>
+                                <small class="ml10">围观群众：<i class="readcount"><?= $article['view_num'] ?></i></small>
+                                <small class="ml10">更新于 <label><?= date('Y-m-d H:i', $article['create_time']) ?></label> </small>
                             </p>
                         </aside>
                         <div class="time mt10" style="padding-bottom:0;">
-                            <span class="day">22</span>
-                            <span class="month fs-18">5<small class="fs-14">月</small></span>
-                            <span class="year fs-18">2018</span>
+                            <span class="day"><?= date('d', $article['create_time']) ?></span>
+                            <span class="month fs-18"><?= date('m', $article['create_time']) ?><small class="fs-14">月</small></span>
+                            <span class="year fs-18"><?= date('Y', $article['create_time']) ?></span>
                         </div>
                         <div class="content artiledetail" style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
-                            内容自定义
+                            <?= htmlspecialchars_decode($article['content']) ?>
                             <div class="copyright mt20">
                                 <p class="f-toe fc-black">
-                                    非特殊说明，本文版权归 燕十三 所有，转载请注明出处.
+                                    非特殊说明，本文版权归 Colin 所有，转载请注明出处.
                                 </p>
                                 <p class="f-toe">
                                     本文标题：
-                                    <a href="javascript:void(0)" class="r-title">使用码云和VS托管本地代码</a>
+                                    <a href="javascript:void(0)" class="r-title"><?= $article['title'] ?></a>
                                 </p>
                                 <p class="f-toe">
                                     本文网址：
-                                    <a href="#">https://www.yanshisan.cn/Blog/Read/7</a>
+                                    <a href="#"><?= Url::current([], true) ?></a>
                                 </p>
                             </div>
-                            <div id="aplayer" style="margin:5px 0"></div>
-                            <h6>延伸阅读</h6>
-                            <ol class="b-relation"></ol>
-                        </div>
-                        <div class="bdsharebuttonbox share" data-tag="share_1">
-                            <ul>
-                                <li class="f-praise"><span><a class="s-praise"></a></span></li>
-                                <li class="f-weinxi"><a class="s-weinxi" data-cmd="weixin"></a></li>
-                                <li class="f-sina"><a class="s-sina" data-cmd="tsina"></a></li>
-                                <li class="f-qq" href="#"><i class="fa fa-qq"></i></li>
-                                <li class="f-qzone"><a class="s-qzone" data-cmd="qzone"></a></li>
-                            </ul>
                         </div>
                         <div class="f-cb"></div>
                         <div class="mt20 f-fwn fs-24 fc-grey comment" style="border-top: 1px solid #e1e2e0; padding-top: 20px;">

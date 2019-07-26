@@ -8,6 +8,9 @@
 });
 var slider = 0;
 var pathname = window.location.href;
+var host = window.location.host;
+var protocol = location.protocol;
+var domain = protocol + '//' + host;
 var master = {};
 master.start = function ($) {
     $('#nav li').hover(function () {
@@ -24,7 +27,9 @@ master.start = function ($) {
         var navobjs = $("#nav a");
         $.each(navobjs, function () {
             var href = $(this).attr("href");
-            if (pathname.indexOf(href) != -1) {
+            var navUrl = domain + href;
+            console.log(navUrl)
+            if (pathname == navUrl) {
                 $(this).parent().addClass('current');
             }
         });

@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\libs\Helper;
 use Yii;
 use yii\helpers\Url;
 
@@ -116,12 +117,22 @@ class Article extends Base
 
     public static function mFormatData($data)
     {
+        $len = 350;
+        $detect = new \Mobile_Detect();
+        if ($detect->isMobile()) $len = 120;
+        $flagArr = self::getFlags();
+        $typeArr = self::getTypes();
         foreach ($data as &$list) {
             $list['url'] = Url::to(['index/article', 'id' => $list['id']]);
-            $list['pic'] = Url::to('@web/image/cover/2019121192339714.png');
+            $list['pic'] = Url::to('@web/image/cover/default.jpg');
+            $list['summary'] = Helper::extractHtmlData($list['content'], $len);
+            $list['year'] = date('Y', $list['create_time']);
+            $list['month'] = date('m', $list['create_time']);
+            $list['day'] = date('d', $list['create_time']);
+            $list['flag'] = $flagArr[$list['flag']];
+            $list['type'] = $typeArr[$list['type']];
         }
         return $data;
     }
-
 
 }

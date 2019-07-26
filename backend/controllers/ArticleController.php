@@ -30,7 +30,8 @@ class ArticleController extends BaseController
         $flagArr = Article::getFlags();
         $typeArr = Article::getTypes();
         $statusArr = Article::getStatus();
-        $data = compact('models', 'pagination', 'search', 'flagArr', 'typeArr', 'statusArr');
+        $frontArticleUrl = Yii::$app->params['frontDomain'] . '/index/article?id=';
+        $data = compact('models', 'pagination', 'search', 'flagArr', 'typeArr', 'statusArr', 'frontArticleUrl');
         return $this->render('index', $data);
     }
 

@@ -257,7 +257,8 @@ class Helper
      */
     public static function curl($url, $isPost = 0, $dataFields = '', $cookieFile = '', $v = false) {
         $header = array("Connection: Keep-Alive","Accept: text/html, application/xhtml+xml, */*",
-            "Pragma: no-cache", "Accept-Language: zh-Hans-CN,zh-Hans;q=0.8,en-US;q=0.5,en;q=0.3","User-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            "Pragma: no-cache", "Accept-Language: zh-Hans-CN,zh-Hans;q=0.8,en-US;q=0.5,en;q=0.3",
+            "User-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, $v);
@@ -645,5 +646,18 @@ class Helper
         );
     }
 
+    /**
+     * 从HTML中获取文本摘要
+     * @param $data
+     * @param $len
+     * @return string
+     */
+    public static function extractHtmlData($content, $len) {
+        $content = htmlspecialchars_decode($content);
+        $content = preg_replace('/<.*>/', '', $content);
+        if (strlen($content) <= $len) return $content;
+        $content = mb_substr($content, 0, $len) . '...';
+        return $content;
+    }
 
 }

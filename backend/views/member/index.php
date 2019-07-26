@@ -18,8 +18,8 @@ use yii\helpers\Url;
         <form class="layui-form layui-col-md12 x-so">
             <input type="text" name="search[nickname]"  placeholder="昵称"
                    value="<?= isset($search['nickname']) ? $search['nickname'] : '' ?>" autocomplete="off" class="layui-input">
-            <input type="text" name="search[tel]"  placeholder="手机号"
-                   value="<?= isset($search['tel']) ? $search['tel'] : '' ?>" autocomplete="off" class="layui-input">
+            <input type="text" name="search[tel]"  placeholder="QQ"
+                   value="<?= isset($search['qq']) ? $search['qq'] : '' ?>" autocomplete="off" class="layui-input">
             <input class="layui-input" placeholder="开始日" name="search[b_time]" id="start"
                    value="<?= isset($search['b_time']) ? $search['b_time'] : '' ?>" autocomplete="off">
             <input class="layui-input" placeholder="截止日" name="search[e_time]" id="end"
@@ -33,7 +33,6 @@ use yii\helpers\Url;
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="batch_del('<?= Url::to([$this->context->id . '/batch-del']) ?>')"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','<?=  Url::to([$this->context->id . '/create']) ?>')"><i class="layui-icon"></i>添加</button>
-        <a class="layui-btn" href="<?= Url::to([$this->context->id . '/export', 'search' => $search]) ?>"><i class="layui-icon" style="font-size: 15px;opacity: .8">&#xe62f;</i>导出</a>
         <span class="x-right" style="line-height:40px">共有数据：<span class="count_num"><?= $pagination->totalCount ?></span> 条 ( <?= $pagination->getPageCount() ?> 页 )</span>
     </xblock>
     <table class="layui-table">
@@ -44,8 +43,7 @@ use yii\helpers\Url;
             </th>
             <th>ID</th>
             <th>昵称</th>
-            <th>手机号码</th>
-            <th>邮箱</th>
+            <th>QQ</th>
             <th>创建时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -58,8 +56,7 @@ use yii\helpers\Url;
                 </td>
                 <td><?= $list['id'] ?></td>
                 <td><?= $list['nickname'] ?></td>
-                <td><?= $list['tel'] ?></td>
-                <td><?= $list['email'] ?></td>
+                <td><?= $list['qq'] ?></td>
                 <td><?= date('Y-m-d H:i:s', $list['create_time']) ?></td>
                 <td class="td-status">
                     <span class="layui-form" onclick="changeStatus('<?= $list['id'] ?>', '<?= $list['status'] ?>')">

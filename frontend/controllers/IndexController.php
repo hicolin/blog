@@ -24,25 +24,37 @@ class IndexController extends BaseController
             return $this->redirect('/');
         }
         $this->view->title = $this->getCateTitle($type);
-        $query = Article::find()->orderBy('create_time desc');
-        if ($type) $query->where(['type' => $type]);
-        $count = $query->count();
-        $pageSize = 10;
-        $pages = ceil($count / $pageSize);
-        $offset = ($page - 1) * $pageSize;
-        $data = $query->offset($offset)->limit(10)->asArray()->all();
-        $data = Article::mFormatData($data);
+
         if (Yii::$app->request->isAjax) {
+            $query = Article::find()->where(['status' => 1])->orderBy('create_time desc');
+            if ($type) $query->andWhere(['type' => $type]);
+            $count = $query->count();
+            $pageSize = 5;
+            $pages = ceil($count / $pageSize);
+            $offset = ($page - 1) * $pageSize;
+            $data = $query->offset($offset)->limit($pageSize)->asArray()->all();
+            $data = Article::mFormatData($data);
             $res = compact('data', 'pages');
-            return $this->json(200, $res);
+            return $this->json(200, 'ok', $res);
         }
-        return $this->render('index', compact('type'));
+
+        $articleNum = [];
+        $articleNum['all'] = Article::find()->where(['status' => 1])->count();
+        $articleNum['backend'] = Article::find()->where(['status' => 1, 'type' => 1])->count();
+        $articleNum['frontend'] = Article::find()->where(['status' => 1, 'type' => 2])->count();
+        $articleNum['linux'] = Article::find()->where(['status' => 1, 'type' => 3])->count();
+        $articleNum['other'] = Article::find()->where(['status' => 1, 'type' => 4])->count();
+
+        return $this->render('index', compact('type', 'articleNum'));
     }
 
     public function actionArticle()
     {
         $this->view->title = '文章标题';
-        return $this->render('article');
+        $id = (int)Yii::$app->request->get('id');
+        $article = Article::findOne($id);
+        if (!$article) return $this->redirect('/');
+        return $this->render('article', compact('article'));
     }
 
     public function actionMessage()
