@@ -133,3 +133,9 @@
         </div>
     </div>
 </div>
+
+<?php $this->beginBlock('footer') ?>
+<script>
+    
+</script>
+<?php $this->endBlock() ?>

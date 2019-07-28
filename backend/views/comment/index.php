@@ -32,7 +32,6 @@ use yii\helpers\Url;
     </div>
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="batch_del('<?= Url::to([$this->context->id . '/batch-del']) ?>')"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?=  Url::to([$this->context->id . '/create']) ?>')"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：<span class="count_num"><?= $pagination->totalCount ?></span> 条 ( <?= $pagination->getPageCount() ?> 页 )</span>
     </xblock>
     <table class="layui-table">
@@ -42,11 +41,9 @@ use yii\helpers\Url;
                 <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>昵称</th>
-            <th>QQ</th>
-            <th>回复用户昵称</th>
-            <th>回复用户QQ</th>
+            <th>用户</th>
             <th>评论</th>
+            <th>回复用户</th>
             <th>文章</th>
             <th>类型</th>
             <th>IP</th>
@@ -62,13 +59,11 @@ use yii\helpers\Url;
                     <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?= $list['id']?>'><i class="layui-icon">&#xe605;</i></div>
                 </td>
                 <td><?= $list['id'] ?></td>
-                <td><?= $list['member']['nickname'] ?></td>
-                <td><?= $list['member']['qq'] ?></td>
-                <td><?= $list['to_user_id'] ?></td>
-                <td><?= $list['to_user_id'] ?></td>
+                <td><?= $list['member']['nickname'] ?><br><?= $list['member']['qq'] ?></td>
                 <td><?= htmlspecialchars_decode($list['content']) ?></td>
-                <td><?= $list['article_id'] ?></td>
-                <td><?= $list['type'] ?></td>
+                <td><?= $list['user']['nickname'] ?><br><?= $list['user']['qq'] ?></td>
+                <td><a href="javascript:;" style="color: rgb(1, 166, 255)" onclick="x_admin_show('查看', '<?= $frontArticleUrl . $list['article']['id']?>')" ><?= $list['article']['title'] ?></a></td>
+                <td><?= $typeArr[$list['type']] ?></td>
                 <td><?= $list['ip'] ?></td>
                 <td><?= $list['location'] ?></td>
                 <td class="td-status">
@@ -79,9 +74,6 @@ use yii\helpers\Url;
                 </td>
                 <td><?= date('Y-m-d H:i:s', $list['create_time']) ?></td>
                 <td class="td-manage">
-                    <a title="编辑"  onclick="x_admin_show('编辑','<?= Url::to([$this->context->id . '/update', 'id' => $list['id']])?>')" href="javascript:;">
-                        <i class="layui-icon">&#xe642;</i>
-                    </a>
                     <a title="删除" onclick="del(this,'<?= $list['id'] ?>', '<?= Url::to([$this->context->id . '/del']) ?>')" href="javascript:;">
                         <i class="layui-icon">&#xe640;</i>
                     </a>

@@ -12,7 +12,6 @@ use yii\helpers\Url;
         <div class="col-content" style="width:100%">
             <div class="inner">
                 <article class="article-list">
-                    <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid" />
                     <section class="article-item">
                         <aside class="title" style="line-height:1.5;">
                             <h4><?= $article['title'] ?></h4>

@@ -14,7 +14,8 @@ class CommentController extends BaseController
 {
     public function actionIndex()
     {
-        $query = Comment::find()->joinWith('member');
+        $query = Comment::find()->joinWith('member')
+            ->joinWith('user')->joinWith('article');
         $search = Yii::$app->request->get('search');
         $query = $this->condition($query, $search);
         $countQuery = clone $query;
@@ -27,7 +28,10 @@ class CommentController extends BaseController
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        return $this->render('index', compact('models', 'pagination', 'search'));
+        $frontArticleUrl = Yii::$app->params['frontDomain'] . '/index/article?id=';
+        $typeArr = Comment::getTypes();
+        $data = compact('models', 'pagination', 'search', 'frontArticleUrl', 'typeArr');
+        return $this->render('index', $data);
     }
 
     public function condition($query, $search)
@@ -47,36 +51,6 @@ class CommentController extends BaseController
             $query = $query->andWhere(['<=', 'create_time', $eTime]);
         }
         return $query;
-    }
-
-    public function actionCreate()
-    {
-        if (Yii::$app->request->isPost) {
-            $post = Yii::$app->request->post();
-            $model = new Comment();
-            $res = $model->create($post);
-            if ($res['status'] != 200) {
-                return $this->json(100, $res['msg']);
-            }
-            return $this->json(200, $res['msg']);
-        }
-        return $this->render('create');
-    }
-
-    public function actionUpdate()
-    {
-        $id = Yii::$app->request->get('id');
-        $model = Comment::findOne($id);
-        if (Yii::$app->request->isPost) {
-            $post = Yii::$app->request->post();
-            $model = new Comment();
-            $res = $model->edit($post);
-            if ($res['status'] != 200) {
-                return $this->json(100, $res['msg']);
-            }
-            return $this->json(200, $res['msg']);
-        }
-        return $this->render('update', compact('model'));
     }
 
     public function actionChangeStatus()

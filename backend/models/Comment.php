@@ -72,4 +72,14 @@ class Comment extends Base
         return $this->hasOne(Member::className(), ['id' => 'to_user_id'])->alias('colin_user');
     }
 
+    public function getArticle()
+    {
+        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+    }
+
+    public static function getTypes()
+    {
+        return [1 => '文章', 2 => '留言'];
+    }
+
 }
