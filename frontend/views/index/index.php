@@ -1,6 +1,13 @@
 <?php
 use yii\helpers\Url;
 ?>
+
+<?php $this->beginBlock('header') ?>
+<style>
+    .cover img{background-image: url("./image/lazy_img.png"); background-size: contain}
+</style>
+<?php $this->endBlock() ?>
+
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">
         <div class="col-content">

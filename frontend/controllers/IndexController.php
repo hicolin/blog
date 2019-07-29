@@ -8,7 +8,10 @@
 namespace frontend\controllers;
 
 
+use backend\libs\Util;
 use backend\models\Article;
+use backend\models\Comment;
+use backend\models\Member;
 use Yii;
 
 class IndexController extends BaseController
@@ -60,6 +63,46 @@ class IndexController extends BaseController
     public function actionMessage()
     {
         $this->view->title = '留言';
+        if (Yii::$app->request->isPost) {
+            $qq = Yii::$app->request->post('qq');
+            $content = Yii::$app->request->post('content');
+            if ($qq == '811687790') {
+                return $this->json(100, '博主QQ号，禁止他人使用');
+            }
+            $qqArr = explode('@', $qq);
+            if ($qqArr[0] == '811687790' && strtolower($qqArr[1]) == 'hicolin') {
+                $qq = $qqArr[0];
+            }
+            if (!preg_match('/^\d{5,12}$/', $qq)) {
+                return $this->json(100, 'QQ号码不正确');
+            }
+
+            $member = Member::findOne(['qq' => $qq]);
+            if (!$member) {
+                $qqInfo = Util::getUserInfoByQq($qq);
+                if (!$qqInfo) {
+                    return $this->json(200, 'QQ号码不正确');
+                }
+                $qqAvatar = $qqInfo[$qq][0];
+                $qqNickname = $qqInfo[$qq][6];
+                $memberModel = new Member();
+                $res = $memberModel->mAdd($qq, $qqNickname, $qqAvatar);
+                if ($res['status'] != 200) {
+                    return $this->json(100, $res['msg']);
+                }
+                $member = Member::findOne(['qq' => $qq]);
+            }
+            $ip = Yii::$app->request->getUserIP();
+            $comment = new Comment();
+            $res = $comment->mAddMessage($member->id, $content, $ip);
+            if ($res['status'] != 200) {
+                return $this->json(100, $res['msg']);
+            }
+            $data = Comment::find()->joinWith('member')
+                ->where(['colin_comment.id' => $comment->id])
+                ->asArray()->one();
+            return $this->json(200, '留言成功', $data);
+        }
         return $this->render('message');
     }
 

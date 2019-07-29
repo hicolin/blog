@@ -6,7 +6,7 @@ layui.use(['element', 'jquery', 'form', 'layedit', 'flow'], function () {
     var layedit = layui.layedit;
     var flow = layui.flow;
     //留言的编辑器
-    var editIndex = layedit.build('remarkEditor', {
+    var editIndex = layedit.build('#remarkEditor', {
         height: 150,
         tool: ['face', '|', 'link'],
     });
@@ -14,7 +14,10 @@ layui.use(['element', 'jquery', 'form', 'layedit', 'flow'], function () {
     form.verify({
         content: function (value) {
             value = $.trim(layedit.getContent(editIndex));
-            if (value == "") return "请输入内容";
+            if (value == "") {
+                console.log("请输入内容");
+                return;
+            }
             layedit.sync(editIndex);
         },
         replyContent: function (value) {
@@ -38,6 +41,6 @@ layui.use(['element', 'jquery', 'form', 'layedit', 'flow'], function () {
              $(this).text('回复');
          }
      });
- 
+
 });
- 
+

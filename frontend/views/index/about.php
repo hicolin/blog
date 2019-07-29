@@ -43,7 +43,7 @@ use yii\helpers\Url;
                     </ul>
                     <br><br>
                     <div>
-                        <img src="https://yssimage.oss-cn-hangzhou.aliyuncs.com/bg9.jpg" style="width:100%;height:320px;">
+                        <img src="<?= Url::to('@web/image/bg/bg1.png')?>" style="width:100%;height:320px;">
                     </div>
                 </section>
             </article>

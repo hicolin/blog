@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">
         <div class="container-inner wow flipInX">
@@ -10,10 +13,11 @@
             <div class="textarea-wrap message" id="textarea-wrap">
                 <form class="layui-form blog-editor" action="">
                     <div class="layui-form-item">
-                        <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+                        <textarea name="editorContent" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
                     </div>
+                    <blockquote class="layui-elem-quote" style="color: #999">提交留言，需要输入QQ号，用来快速获取您的头像和昵称。</blockquote>
                     <div class="layui-form-item">
-                        <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                        <button class="layui-btn" id="sub_btn" type="button">提交留言</button>
                     </div>
                 </form>
             </div>
@@ -136,6 +140,38 @@
 
 <?php $this->beginBlock('footer') ?>
 <script>
-    
+    layui.use(['layedit', 'jquery', 'layer'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var layedit = layui.layedit;
+
+        var editIndex = layedit.build('remarkEditor', {
+            height: 150,
+            tool: ['face', '|', 'link'],
+        });
+
+        $('#sub_btn').click(function () {
+            var content = $.trim(layedit.getContent(editIndex));
+            if (!content) {
+                return layer.msg('留言内容不能为空');
+            }
+            layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                layer.load(3);
+                $.post('<?= Url::to(['index/message']) ?>', {qq: text, content: content}, function (res) {
+                    if (res.status === 200) {
+                        layer.closeAll();
+                        layer.msg(res.msg, function () {
+                           // todo dom操作
+                            layedit.setContent(editIndex, '', false);
+                        });
+                        console.log(res)
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }, 'json')
+            });
+        })
+
+    })
 </script>
 <?php $this->endBlock() ?>

@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\libs\Helper;
 use Yii;
 
 /**
@@ -80,6 +81,23 @@ class Comment extends Base
     public static function getTypes()
     {
         return [1 => '文章', 2 => '留言'];
+    }
+
+    public function mAddMessage($userId, $content, $ip)
+    {
+        $this->user_id = $userId;
+        $this->content = $content;
+        $this->type = 2;
+        $this->status = 1;
+        $this->ip = $ip;
+        $res = Helper::getCityByIp($ip);
+        $this->location = $res['province'] . ' ' . $res['city'];
+        $this->create_time = time();
+        if (!$this->save()) {
+            $error = array_values($this->getFirstErrors())[0];
+            return $this->arrData(100, $error);
+        }
+        return $this->arrData(200, '添加成功');
     }
 
 }
