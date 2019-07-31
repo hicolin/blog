@@ -63,6 +63,25 @@ class IndexController extends BaseController
     public function actionMessage()
     {
         $this->view->title = '留言';
+        if (Yii::$app->request->isAjax) {
+            $page = (int)Yii::$app->request->get('page');
+            $query = Comment::find()->joinWith('member')->joinWith('user')
+                ->where(['colin_comment.status' => 1,'colin_comment.type' => 2, 'colin_comment.pid' => 0])
+                ->orderBy('colin_comment.create_time desc');
+            $count = $query->count();
+            $pageSize = 10;
+            $pages = ceil($count / $pageSize);
+            $offset = ($page - 1) * $pageSize;
+            $data = $query->offset($offset)->limit($pageSize)->asArray()->all();
+            $data = Comment::mFormatData($data);
+            $res = compact('data', 'pages');
+            return $this->json(200, 'ok', $res);
+        }
+        return $this->render('message');
+    }
+
+    public function actionAddMessage()
+    {
         if (Yii::$app->request->isPost) {
             $qq = Yii::$app->request->post('qq');
             $content = Yii::$app->request->post('content');
@@ -85,8 +104,10 @@ class IndexController extends BaseController
                 }
                 $qqAvatar = $qqInfo[$qq][0];
                 $qqNickname = $qqInfo[$qq][6];
+//                $storeAvatar = $this->saveAvatar($qq, $qqAvatar);
+                $storeAvatar = $qqAvatar;
                 $memberModel = new Member();
-                $res = $memberModel->mAdd($qq, $qqNickname, $qqAvatar);
+                $res = $memberModel->mAdd($qq, $qqNickname, $storeAvatar);
                 if ($res['status'] != 200) {
                     return $this->json(100, $res['msg']);
                 }
@@ -103,7 +124,6 @@ class IndexController extends BaseController
                 ->asArray()->one();
             return $this->json(200, '留言成功', $data);
         }
-        return $this->render('message');
     }
 
     public function actionAbout()
@@ -124,5 +144,16 @@ class IndexController extends BaseController
         } else {
             return $typeArr[$type];
         }
+    }
+
+    // 保存QQ头像
+    protected function saveAvatar($qq, $qqAvatar) {
+        // $avatarPath = Yii::getAlias('@web/uploads/avatar/');    // 这种方法会出现权限错误： mkdir(): Permission denied
+        $avatarPath = 'uploads/avatar/';
+        is_dir($avatarPath) || mkdir($avatarPath, 0777, true);
+        $avatarFile = $qq . '.jpg';
+        $storeAvatar = $avatarPath . $avatarFile;
+        file_put_contents($storeAvatar, file_get_contents($qqAvatar));
+        return $storeAvatar;
     }
 }

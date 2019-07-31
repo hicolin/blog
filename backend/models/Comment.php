@@ -4,6 +4,7 @@ namespace backend\models;
 
 use backend\libs\Helper;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "colin_comment".
@@ -86,7 +87,7 @@ class Comment extends Base
     public function mAddMessage($userId, $content, $ip)
     {
         $this->user_id = $userId;
-        $this->content = $content;
+        $this->content = htmlspecialchars($content);
         $this->type = 2;
         $this->status = 1;
         $this->ip = $ip;
@@ -98,6 +99,19 @@ class Comment extends Base
             return $this->arrData(100, $error);
         }
         return $this->arrData(200, '添加成功');
+    }
+
+    public static function mFormatData($data)
+    {
+        foreach ($data as &$list) {
+            $list['create_time'] = date('Y-m-d', $list['create_time']);
+            $list['content'] = htmlspecialchars_decode($list['content']);
+            $list['child'] = Comment::find()->joinWith('member')->joinWith('user')
+                ->where(['colin_comment.status' => 1,'colin_comment.type' => 2, 'colin_comment.pid' => $list['id']])
+                ->orderBy('colin_comment.create_time desc')
+                ->asArray()->all();
+        }
+        return $data;
     }
 
 }
