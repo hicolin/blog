@@ -82,11 +82,39 @@ use yii\helpers\Url;
                     next(list.join(''), page < res.pages)
                 }, 'json')
             }
-        })
-    })
+        });
+
+        //回复按钮点击事件
+        $('#message-list').on('click', '.btn-reply', function () {
+            var targetId = $(this).data('id')
+                , targetName = $(this).data('nickname')
+                , targetPid = $(this).data('pid')
+                , $container = $(this).parent('p').parent().siblings('.replycontainer');
+            if ($(this).text() == '回复') {
+                $('.replycontainer').addClass('layui-hide');
+                $('.btn-reply').text('回复');
+                $container.find('textarea').attr('placeholder', '回复【' + targetName + '】');
+                $container.removeClass('layui-hide');
+                $(this).parents('.message-list li').find('.btn-reply').text('回复');
+                $(this).text('收起');
+            } else {
+                $container.addClass('layui-hide');
+                $(this).text('回复');
+            }
+
+            $container.find('button').click(function () {
+                var content = $.trim($('textarea[name="replyContent"]').val());
+                if (!content) {
+                    return layer.msg('回复内容不能为空');
+                }
+            })
+
+        });
+
+
+    });
 
     function jointSingleHtml(html, item) {
-        console.log(item);
         html = `
             <li class="zoomIn article">
                     <div class="comment-parent">
@@ -109,7 +137,7 @@ use yii\helpers\Url;
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>${item.location}</span>
                             <span class="comment-time">${item.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-targetid="1" data-targetname="燕十三">回复</a>
+                            <a href="javascript:;" class="btn-reply" data-id="${item.id}"  data-pid="${item.pid}" data-nickname="${item.member.nickname}">回复</a>
                         </p>
                     </div>
                     `;
@@ -145,7 +173,7 @@ use yii\helpers\Url;
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>${val.location}</span>
                             <span class="comment-time">${val.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-targetid="2" data-targetname="燕十四">回复</a>
+                            <a href="javascript:;" class="btn-reply" data-id="${val.id}" data-pid="${val.pid}" data-nickname="${val.member.nickname}">回复</a>
                         </p>
                     </div>
                     `;
@@ -154,13 +182,11 @@ use yii\helpers\Url;
         html += `
                     <div class="replycontainer layui-hide">
                         <form class="layui-form" action="">
-                            <input type="hidden" name="remarkId" value="1">
-                            <input type="hidden" name="targetUserId" value="0">
                             <div class="layui-form-item">
-                                <textarea name="replyContent" lay-verify="replyContent" placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>
+                                <textarea name="replyContent"  placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn layui-btn-xs" lay-submit="formReply" lay-filter="formReply">提交</button>
+                                <button class="layui-btn layui-btn-xs" type="button">提交</button>
                             </div>
                         </form>
                     </div>

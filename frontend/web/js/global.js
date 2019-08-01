@@ -28,7 +28,6 @@ master.start = function ($) {
         $.each(navobjs, function () {
             var href = $(this).attr("href");
             var navUrl = domain + href;
-            console.log(navUrl)
             if (pathname == navUrl) {
                 $(this).parent().addClass('current');
             }
