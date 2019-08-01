@@ -20,7 +20,7 @@ use yii\helpers\Url;
                                     作者：<a href="javascript:void(0)" target="_blank" class="fc-link">Colin</a>
                                 </small>
                                 <small class="ml10">围观群众：<i class="readcount"><?= $article['view_num'] ?></i></small>
-                                <small class="ml10">更新于 <label><?= date('Y-m-d H:i', $article['create_time']) ?></label> </small>
+                                <small class="ml10">更新于 <label><?= date('Y-m-d', $article['create_time']) ?></label> </small>
                             </p>
                         </aside>
                         <div class="time mt10" style="padding-bottom:0;">
