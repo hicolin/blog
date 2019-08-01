@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 ?>
+
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">
         <div class="container-inner wow flipInX">
@@ -25,61 +26,12 @@ use yii\helpers\Url;
         <div class="f-cb"></div>
         <div class="mt20">
             <ul class="message-list" id="message-list">
-                <li class="zoomIn article">
-                    <div class="comment-parent">
-                        <a name="remark-1"></a>
-                        <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100" />
-                        <div class="info">
-                            <span class="username">燕十三</span>
-                        </div>
-                        <div class="comment-content">
-                            剑气纵横三万里
-                        </div>
-                        <p class="info info-footer">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>四川</span>
-                            <span class="comment-time">2018-01-01</span>
-                            <a href="javascript:;" class="btn-reply" data-targetid="1" data-targetname="燕十三">回复</a>
-                        </p>
-                    </div>
-                    <hr />
-                    <div class="comment-child">
-                        <a name="reply-1"></a>
-                        <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100">
-                        <div class="info">
-                            <span class="username">燕十四</span>
-                            <span style="padding-right:0;margin-left:-5px;">回复</span>
-                            <span class="username">燕十三</span>
-                            <span>一剑光寒十九洲</span>
-                        </div>
-                        <p class="info">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>四川</span>
-                            <span class="comment-time">2018-01-01</span>
-                            <a href="javascript:;" class="btn-reply" data-targetid="2" data-targetname="燕十四">回复</a>
-                        </p>
-                    </div>
-                    <div class="replycontainer layui-hide">
-                        <form class="layui-form" action="">
-                            <input type="hidden" name="remarkId" value="1">
-                            <input type="hidden" name="targetUserId" value="0">
-                            <div class="layui-form-item">
-                                <textarea name="replyContent" lay-verify="replyContent" placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>
-                            </div>
-                            <div class="layui-form-item">
-                                <button class="layui-btn layui-btn-xs" lay-submit="formReply" lay-filter="formReply">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
 </div>
 
 <?php $this->beginBlock('footer') ?>
-
-
 <script>
     layui.use(['layedit', 'jquery', 'layer', 'flow'], function () {
         var $ = layui.jquery;
@@ -138,10 +90,17 @@ use yii\helpers\Url;
         html = `
             <li class="zoomIn article">
                     <div class="comment-parent">
-                        <a name="remark-1"></a>
                         <img lay-src="${item.member.avatar}" />
                         <div class="info">
-                            <span class="username">${item.member.nickname}</span>
+                            <span class="username">${item.member.nickname}
+                            ${(function () {
+                               if (item.member.qq == 811687790) {
+                                   return `<span class="layui-badge">博主</span>`;
+                               } else {
+                                   return '';
+                               }
+                            })()}
+                        </span>
                         </div>
                         <div class="comment-content">
                             ${item.content}
@@ -156,27 +115,42 @@ use yii\helpers\Url;
                     `;
         if (item.child.length > 0) {
             item.child.forEach(function (val) {
-                console.log(val)
-            })
-        }
-        html += `
+                html += `
                     <hr />
                     <div class="comment-child">
-                        <img src="https://thirdqq.qlogo.cn/qqapp/101465933/7627F745B95BFAC18C6C481FE72B4EB1/100">
+                        <img lay-src="${val.member.avatar}">
                         <div class="info">
-                            <span class="username">燕十四</span>
+                            <span class="username">${val.member.nickname}
+                                ${(function () {
+                                    if (val.member.qq == 811687790) {
+                                        return `<span class="layui-badge">博主</span>`;
+                                    } else {
+                                        return '';
+                                    }
+                                })()}
+                            </span>
                             <span style="padding-right:0;margin-left:-5px;">回复</span>
-                            <span class="username">燕十三</span>
-                            <span>一剑光寒十九洲</span>
+                            <span class="username">${val.user.nickname}
+                                ${(function () {
+                                    if (val.user.qq == 811687790) {
+                                        return `<span class="layui-badge">博主</span>`;
+                                    } else {
+                                        return '';
+                                    }
+                                })()}
+                            </span>
+                            <div>${val.content}</div>
                         </div>
                         <p class="info">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>四川</span>
-                            <span class="comment-time">2018-01-01</span>
+                            <span>${val.location}</span>
+                            <span class="comment-time">${val.create_time}</span>
                             <a href="javascript:;" class="btn-reply" data-targetid="2" data-targetname="燕十四">回复</a>
                         </p>
                     </div>
                     `;
+            })
+        }
         html += `
                     <div class="replycontainer layui-hide">
                         <form class="layui-form" action="">

@@ -102,10 +102,12 @@ class IndexController extends BaseController
                 if (!$qqInfo) {
                     return $this->json(200, 'QQ号码不正确');
                 }
-                $qqAvatar = $qqInfo[$qq][0];
+//                $qqAvatar = $qqInfo[$qq][0];
                 $qqNickname = $qqInfo[$qq][6];
 //                $storeAvatar = $this->saveAvatar($qq, $qqAvatar);
-                $storeAvatar = $qqAvatar;
+                // $qqAvatar: http://qlogo3.store.qq.com/qzone/811687790/811687790/100  (加了图片防盗链，不能直接引用)
+                // 没加防盗链的头像地址 http://q1.qlogo.cn/g?b=qq&nk=494942200&s=100
+                $storeAvatar = "http://q1.qlogo.cn/g?b=qq&nk={$qq}&s=100";
                 $memberModel = new Member();
                 $res = $memberModel->mAdd($qq, $qqNickname, $storeAvatar);
                 if ($res['status'] != 200) {

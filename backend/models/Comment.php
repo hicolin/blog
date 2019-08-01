@@ -3,8 +3,6 @@
 namespace backend\models;
 
 use backend\libs\Helper;
-use Yii;
-use yii\helpers\Url;
 
 /**
  * This is the model class for table "colin_comment".
@@ -107,9 +105,13 @@ class Comment extends Base
             $list['create_time'] = date('Y-m-d', $list['create_time']);
             $list['content'] = htmlspecialchars_decode($list['content']);
             $list['child'] = Comment::find()->joinWith('member')->joinWith('user')
-                ->where(['colin_comment.status' => 1,'colin_comment.type' => 2, 'colin_comment.pid' => $list['id']])
-                ->orderBy('colin_comment.create_time desc')
+                ->where(['colin_comment.status' => 1, 'colin_comment.type' => 2, 'colin_comment.pid' => $list['id']])
+                ->orderBy('colin_comment.create_time asc')  // 二级评论按时间升序排列
                 ->asArray()->all();
+            foreach ($list['child'] as &$item) {
+                $item['content'] = htmlspecialchars_decode($item['content']);
+                $item['create_time'] = date('Y-m-d', $item['create_time']);
+            }
         }
         return $data;
     }
