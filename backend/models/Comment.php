@@ -82,9 +82,12 @@ class Comment extends Base
         return [1 => '文章', 2 => '留言'];
     }
 
-    public function mAddMessage($userId, $content, $ip)
+    public function mAddMessage($userId, $content, $ip, $pid, $toUserId, $articleId)
     {
         $this->user_id = $userId;
+        $toUserId && $this->to_user_id = $toUserId;
+        $pid && $this->pid = $pid;
+        $articleId && $this->article_id = $articleId;
         $this->content = htmlspecialchars($content);
         $this->type = 2;
         $this->status = 1;

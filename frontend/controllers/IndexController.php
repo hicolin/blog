@@ -85,6 +85,10 @@ class IndexController extends BaseController
         if (Yii::$app->request->isPost) {
             $qq = Yii::$app->request->post('qq');
             $content = Yii::$app->request->post('content');
+            $pid = Yii::$app->request->post('pid');
+            $articleId = Yii::$app->request->post('article_id');
+            $toUserId = Yii::$app->request->post('to_user_id');
+
             if ($qq == '811687790') {
                 return $this->json(100, '博主QQ号，禁止他人使用');
             }
@@ -117,11 +121,11 @@ class IndexController extends BaseController
             }
             $ip = Yii::$app->request->getUserIP();
             $comment = new Comment();
-            $res = $comment->mAddMessage($member->id, $content, $ip);
+            $res = $comment->mAddMessage($member->id, $content, $ip, $pid, $toUserId, $articleId);
             if ($res['status'] != 200) {
                 return $this->json(100, $res['msg']);
             }
-            $data = Comment::find()->joinWith('member')
+            $data = Comment::find()->joinWith('member')->joinWith('user')
                 ->where(['colin_comment.id' => $comment->id])
                 ->asArray()->one();
             return $this->json(200, '留言成功', $data);

@@ -55,8 +55,8 @@ use yii\helpers\Url;
                     if (res.status === 200) {
                         layer.closeAll();
                         layer.msg(res.msg, function () {
-                           // todo dom操作
                             layedit.setContent(editIndex, '', false);
+                            //todo
                         });
                         console.log(res)
                     } else {
@@ -87,7 +87,7 @@ use yii\helpers\Url;
         //回复按钮点击事件
         $('#message-list').on('click', '.btn-reply', function () {
             var targetId = $(this).data('id')
-                , targetName = $(this).data('nickname')
+                ,targetName = $(this).data('nickname')
                 , targetPid = $(this).data('pid')
                 , $container = $(this).parent('p').parent().siblings('.replycontainer');
             if ($(this).text() == '回复') {
@@ -102,12 +102,31 @@ use yii\helpers\Url;
                 $(this).text('回复');
             }
 
+            // 提交回复
             $container.find('button').click(function () {
                 var content = $.trim($('textarea[name="replyContent"]').val());
                 if (!content) {
                     return layer.msg('回复内容不能为空');
                 }
+                layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                    var loadIndex = layer.load(3);
+                    var data = {qq: text, content: content, pid: targetPid, article_id: 0, to_user_id: targetId};
+                    $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
+                        if (res.status === 200) {
+                            layer.closeAll();
+                            layer.msg(res.msg, function () {
+                                // todo dom操作
+                                layedit.setContent(editIndex, '', false);
+                            });
+                            console.log(res)
+                        } else {
+                            layer.close(loadIndex);
+                            layer.msg(res.msg)
+                        }
+                    }, 'json')
+                });
             })
+
 
         });
 
@@ -137,7 +156,7 @@ use yii\helpers\Url;
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>${item.location}</span>
                             <span class="comment-time">${item.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-id="${item.id}"  data-pid="${item.pid}" data-nickname="${item.member.nickname}">回复</a>
+                            <a href="javascript:;" class="btn-reply" data-id="${item.user_id}" data-pid="${item.id}" data-nickname="${item.member.nickname}">回复</a>
                         </p>
                     </div>
                     `;
@@ -173,7 +192,7 @@ use yii\helpers\Url;
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>${val.location}</span>
                             <span class="comment-time">${val.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-id="${val.id}" data-pid="${val.pid}" data-nickname="${val.member.nickname}">回复</a>
+                            <a href="javascript:;" class="btn-reply" data-id="${val.user_id}" data-pid="${item.id}" data-nickname="${val.member.nickname}">回复</a>
                         </p>
                     </div>
                     `;
