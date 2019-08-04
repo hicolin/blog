@@ -63,6 +63,11 @@ class ArticleController extends BaseController
         $typeArr = Article::getTypes();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
+            $img = $post['thumb'];
+            if (stristr($img, 'data:image/')) {
+                self::dd(1);
+            }
+            self::dd(2);
             $model = new Article();
             $res = $model->create($post);
             if ($res['status'] != 200) {

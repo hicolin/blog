@@ -43,9 +43,9 @@ use yii\helpers\Url;
     layui.use(['form','layer'], function(){
         $ = layui.jquery;
         var form = layui.form ,layer = layui.layer;
-
         //监听提交
         form.on('submit(add)', function(data){
+            data.field.img_src = $('.avatar').attr('src');
             layer.load(3);
             $.post('<?= Url::to(['member/create']) ?>', data.field, function (res) {
                 layer.closeAll();
@@ -62,5 +62,6 @@ use yii\helpers\Url;
             return false;
         });
     });
+
 </script>
 <?php $this->endBlock() ?>

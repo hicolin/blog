@@ -648,16 +648,32 @@ class Helper
 
     /**
      * 从HTML中获取文本摘要
-     * @param $data
+     * @param $content
      * @param $len
-     * @return string
+     * @return null|string|string[]
      */
-    public static function extractHtmlData($content, $len) {
+    public static function extractHtmlData($content, $len)
+    {
         $content = htmlspecialchars_decode($content);
         $content = preg_replace('/<.*>/', '', $content);
         if (strlen($content) <= $len) return $content;
         $content = mb_substr($content, 0, $len) . '...';
         return $content;
+    }
+
+    /**
+     * 保存base64编码的图片
+     * @param $base64Str
+     * @param $dir
+     * @return string
+     */
+    public static function saveBase64Img($base64Str, $dir)
+    {
+        $base64Str = explode(',', $base64Str);
+        $data = base64_decode($base64Str[1]);
+        $imgName = date('YmdHis').mt_rand(100000, 999999) . '.png';
+        file_put_contents($dir . $imgName, $data);
+        return $imgName;
     }
 
 }

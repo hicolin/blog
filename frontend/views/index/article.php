@@ -45,28 +45,148 @@ use yii\helpers\Url;
                             </div>
                         </div>
                         <div class="f-cb"></div>
-                        <div class="mt20 f-fwn fs-24 fc-grey comment" style="border-top: 1px solid #e1e2e0; padding-top: 20px;">
+                        <div class="mt20 f-fwn fs-24 fc-grey comment" style="padding-top: 20px;">
                         </div>
                         <fieldset class="layui-elem-field layui-field-title">
                             <legend>发表评论</legend>
                             <div class="layui-field-box">
                                 <div class="leavemessage" style="text-align:initial">
-                                    <form class="layui-form blog-editor" action="">
-                                        <input type="hidden" name="articleid" id="articleid" value="@Model.ID">
+                                    <form class="layui-form blog-editor" onsubmit="return false">
                                         <div class="layui-form-item">
-                                            <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+                                            <textarea name="editorContent" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
                                         </div>
+                                        <blockquote class="layui-elem-quote" style="color: #999">提交留言，需要输入QQ号，用来快速获取您的头像和昵称。</blockquote>
                                         <div class="layui-form-item">
-                                            <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                            <button class="layui-btn" id="sub_btn">提交留言</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </fieldset>
-                        <ul class="blog-comment" id="blog-comment"></ul>
                     </section>
+                    <div class="mt20">
+                        <ul class="message-list" id="message-list">
+                        </ul>
+                    </div>
                 </article>
             </div>
         </div>
     </div>
 </div>
+
+<?php $this->beginBlock('footer') ?>
+<script src="<?= Url::to('@web/js/comment.js') ?>"></script>
+<script>
+    var article_id = '<?= $id ?>';
+    layui.use(['layedit', 'jquery', 'layer', 'flow'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var layedit = layui.layedit;
+        var flow = layui.flow;
+
+        var editIndex = layedit.build('remarkEditor', {
+            height: 150,
+            tool: ['face', '|', 'link'],
+        });
+
+        $('#sub_btn').click(function () {
+            var content = $.trim(layedit.getContent(editIndex));
+            if (!content) {
+                return layer.msg('留言内容不能为空');
+            }
+            layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                var loadIndex = layer.load(3);
+                var data = {qq: text, content: content, article_id: article_id, type: 1};
+                $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
+                    if (res.status === 200) {
+                        layer.closeAll();
+                        layer.msg(res.msg, function () {
+                            var list = [];
+                            layui.each(res.data, function (index, item) {
+                                var html = '';
+                                html = jointSingleHtml(html, item);
+                                list.push(html);
+                            });
+                            $('#message-list').prepend(list.join(''));
+                            layedit.setContent(editIndex, '');
+                        });
+                    } else {
+                        layer.close(loadIndex);
+                        layer.msg(res.msg)
+                    }
+                }, 'json')
+            });
+        });
+
+        flow.load({
+            elem: '#message-list',
+            isLazyimg: true,
+            done: function (page, next) {
+                var list = [];
+                $.get('<?= Url::to(['index/article'])?>', {page: page, article_id: article_id}, function (res) {
+                    res = res.data;
+                    layui.each(res.data, function (index, item) {
+                        var html = '';
+                        html = jointSingleHtml(html, item);
+                        list.push(html);
+                    });
+                    next(list.join(''), page < res.pages)
+                }, 'json')
+            }
+        });
+
+        //回复按钮点击事件
+        $('#message-list').on('click', '.btn-reply', function () {
+            var targetId = $(this).data('id')
+                ,targetName = $(this).data('nickname')
+                , targetPid = $(this).data('pid')
+                , $container = $(this).parent('p').parent().siblings('.replycontainer');
+            if ($(this).text() == '回复') {
+                $('.replycontainer').addClass('layui-hide');
+                $('.btn-reply').text('回复');
+                $container.find('textarea').attr('placeholder', '回复【' + targetName + '】');
+                $container.removeClass('layui-hide');
+                $(this).parents('.message-list li').find('.btn-reply').text('回复');
+                $(this).text('收起');
+            } else {
+                $container.addClass('layui-hide');
+                $(this).text('回复');
+            }
+
+            // 提交回复
+            $container.find('button').click(function () {
+                var content = $.trim($container.find('textarea').val());
+                if (!content) {
+                    return layer.msg('回复内容不能为空');
+                }
+                layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                    var loadIndex = layer.load(3);
+                    var data = {qq: text, content: content, pid: targetPid, article_id: article_id,
+                        to_user_id: targetId, type: 1};
+                    $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
+                        if (res.status === 200) {
+                            layer.closeAll();
+                            layer.msg(res.msg, function () {
+                                var list = [];
+                                layui.each(res.data, function (index, item) {
+                                    var html = '';
+                                    html = jointSecondHtml(html, item, targetPid);
+                                    list.push(html);
+                                });
+                                $container.before(list.join(''));
+                                $container.find('textarea').val('');
+                                $('.btn-reply').text('回复');
+                                $('.replycontainer').addClass('layui-hide');
+                            });
+                        } else {
+                            layer.close(loadIndex);
+                            layer.msg(res.msg)
+                        }
+                    }, 'json')
+                });
+            })
+        });
+    });
+
+</script>
+<?php $this->endBlock() ?>

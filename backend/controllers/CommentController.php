@@ -29,8 +29,9 @@ class CommentController extends BaseController
             ->limit($pagination->limit)
             ->all();
         $frontArticleUrl = Yii::$app->params['frontDomain'] . '/index/article?id=';
+        $frontMessageUrl = Yii::$app->params['frontDomain'] . '/index/message';
         $typeArr = Comment::getTypes();
-        $data = compact('models', 'pagination', 'search', 'frontArticleUrl', 'typeArr');
+        $data = compact('models', 'pagination', 'search', 'frontArticleUrl', 'frontMessageUrl', 'typeArr');
         return $this->render('index', $data);
     }
 

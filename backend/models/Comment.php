@@ -82,14 +82,14 @@ class Comment extends Base
         return [1 => '文章', 2 => '留言'];
     }
 
-    public function mAddMessage($userId, $content, $ip, $pid, $toUserId, $articleId)
+    public function mAddMessage($userId, $content, $ip, $pid, $toUserId, $articleId, $type)
     {
         $this->user_id = $userId;
         $toUserId && $this->to_user_id = $toUserId;
         $pid && $this->pid = $pid;
         $articleId && $this->article_id = $articleId;
         $this->content = htmlspecialchars($content);
-        $this->type = 2;
+        $this->type = $type;
         $this->status = 1;
         $this->ip = $ip;
         $res = Helper::getCityByIp($ip);
@@ -102,14 +102,15 @@ class Comment extends Base
         return $this->arrData(200, '添加成功');
     }
 
-    public static function mFormatData($data)
+    public static function mFormatData($data, $type, $articleId)
     {
         foreach ($data as &$list) {
             $list['create_time'] = date('Y-m-d', $list['create_time']);
             $list['content'] = htmlspecialchars_decode($list['content']);
-            $list['child'] = Comment::find()->joinWith('member')->joinWith('user')
-                ->where(['colin_comment.status' => 1, 'colin_comment.type' => 2, 'colin_comment.pid' => $list['id']])
-                ->orderBy('colin_comment.create_time asc')  // 二级评论按时间升序排列
+            $query = Comment::find()->joinWith('member')->joinWith('user')
+                ->where(['colin_comment.status' => 1, 'colin_comment.type' => $type, 'colin_comment.pid' => $list['id']]);
+            $articleId && $query = $query->andWhere(['colin_comment.article_id' => $articleId]);
+            $list['child'] = $query->orderBy('colin_comment.create_time asc')  // 二级评论按时间升序排列
                 ->asArray()->all();
             foreach ($list['child'] as &$item) {
                 $item['content'] = htmlspecialchars_decode($item['content']);

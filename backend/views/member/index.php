@@ -32,7 +32,6 @@ use yii\helpers\Url;
     </div>
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="batch_del('<?= Url::to([$this->context->id . '/batch-del']) ?>')"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?=  Url::to([$this->context->id . '/create']) ?>')"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：<span class="count_num"><?= $pagination->totalCount ?></span> 条 ( <?= $pagination->getPageCount() ?> 页 )</span>
     </xblock>
     <table class="layui-table">
@@ -44,6 +43,7 @@ use yii\helpers\Url;
             <th>ID</th>
             <th>昵称</th>
             <th>QQ</th>
+            <th>头像</th>
             <th>创建时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -57,6 +57,7 @@ use yii\helpers\Url;
                 <td><?= $list['id'] ?></td>
                 <td><?= $list['nickname'] ?></td>
                 <td><?= $list['qq'] ?></td>
+                <td><img class="avatar" src="<?= $list['avatar'] ?>" alt="" style="width: 30px;height: 30px;cursor: pointer"></td>
                 <td><?= date('Y-m-d H:i:s', $list['create_time']) ?></td>
                 <td class="td-status">
                     <span class="layui-form" onclick="changeStatus('<?= $list['id'] ?>', '<?= $list['status'] ?>')">
@@ -97,5 +98,15 @@ use yii\helpers\Url;
             layer.msg(res.msg, {icon: icon, time: 1500})
         }, 'json')
     }
+
+    $('.avatar').click(function () {
+        var src = $(this).attr('src');
+        var json = {"data": [{"src": src}]};
+        layer.photos({
+            photos: json,
+            anim: 5,
+            shade: 0.3
+        })
+    })
 </script>
 <?php $this->endBlock() ?>

@@ -47,6 +47,13 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="layui-form-item">
+            <label for="thumb" class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <img src="<?= Url::to('@web/images/add_img.png') ?>" class="thumb" style="width: 100px;height: 100px;cursor: pointer">
+                <input type="file" name="file" style="display: none" onchange="viewImg(this)">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
                 <input type="radio" value="1" name="status" lay-skin="primary" title="显示" checked="">
@@ -82,6 +89,8 @@ use yii\helpers\Url;
         //监听提交
         form.on('submit(add)', function(data){
             data.field.content = editor.html();
+            data.field.thumb = $('.thumb').attr('src');
+            layer.load(3);
             $.post('<?= Url::to([$this->context->id . '/create']) ?>', data.field, function (res) {
                 layer.closeAll();
                 if (res.status === 200) {
@@ -97,5 +106,19 @@ use yii\helpers\Url;
             return false;
         });
     });
+
+    $('.thumb').click(function () {
+        $('input[name="file"]').click();
+    });
+
+    // 图片预览
+    function viewImg(obj) {
+        var reads = new FileReader();
+        f = obj.files[0];
+        reads.readAsDataURL(f);
+        reads.onload = function (e) {
+            $(obj).parent().find('img').attr('src', this.result);
+        }
+    }
 </script>
 <?php $this->endBlock() ?>

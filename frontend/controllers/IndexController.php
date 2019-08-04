@@ -53,11 +53,28 @@ class IndexController extends BaseController
 
     public function actionArticle()
     {
-        $this->view->title = '文章标题';
+        if (Yii::$app->request->isAjax) {
+            $page = (int)Yii::$app->request->get('page');
+            $articleId = Yii::$app->request->get('article_id');
+            $type = 1;
+            $query = Comment::find()->joinWith('member')->joinWith('user')
+                ->where(['colin_comment.status' => 1,'colin_comment.type' => 1,
+                    'colin_comment.pid' => 0, 'colin_comment.article_id' => $articleId])
+                ->orderBy('colin_comment.create_time desc');
+            $count = $query->count();
+            $pageSize = 10;
+            $pages = ceil($count / $pageSize);
+            $offset = ($page - 1) * $pageSize;
+            $data = $query->offset($offset)->limit($pageSize)->asArray()->all();
+            $data = Comment::mFormatData($data, $type, $articleId);
+            $res = compact('data', 'pages');
+            return $this->json(200, 'ok', $res);
+        }
         $id = (int)Yii::$app->request->get('id');
         $article = Article::findOne($id);
         if (!$article) return $this->redirect('/');
-        return $this->render('article', compact('article'));
+        $this->view->title = $article->title;
+        return $this->render('article', compact('article', 'id'));
     }
 
     public function actionMessage()
@@ -65,6 +82,8 @@ class IndexController extends BaseController
         $this->view->title = '留言';
         if (Yii::$app->request->isAjax) {
             $page = (int)Yii::$app->request->get('page');
+            $type = 2;
+            $articleId = null;
             $query = Comment::find()->joinWith('member')->joinWith('user')
                 ->where(['colin_comment.status' => 1,'colin_comment.type' => 2, 'colin_comment.pid' => 0])
                 ->orderBy('colin_comment.create_time desc');
@@ -73,7 +92,7 @@ class IndexController extends BaseController
             $pages = ceil($count / $pageSize);
             $offset = ($page - 1) * $pageSize;
             $data = $query->offset($offset)->limit($pageSize)->asArray()->all();
-            $data = Comment::mFormatData($data);
+            $data = Comment::mFormatData($data, $type, $articleId);
             $res = compact('data', 'pages');
             return $this->json(200, 'ok', $res);
         }
@@ -88,6 +107,7 @@ class IndexController extends BaseController
             $pid = Yii::$app->request->post('pid');
             $articleId = Yii::$app->request->post('article_id');
             $toUserId = Yii::$app->request->post('to_user_id');
+            $type = (int)Yii::$app->request->post('type');
 
             if ($qq == '811687790') {
                 return $this->json(100, '博主QQ号，禁止他人使用');
@@ -103,12 +123,13 @@ class IndexController extends BaseController
             $member = Member::findOne(['qq' => $qq]);
             if (!$member) {
                 $qqInfo = Util::getUserInfoByQq($qq);
-                if (!$qqInfo) {
+//                $qqAvatar = $qqInfo[$qq][0];
+                $qqNickname = trim($qqInfo[$qq][6]);
+                if (!$qqInfo || !$qqNickname) {
                     return $this->json(200, 'QQ号码不正确');
                 }
-//                $qqAvatar = $qqInfo[$qq][0];
-                $qqNickname = $qqInfo[$qq][6];
-//                $storeAvatar = $this->saveAvatar($qq, $qqAvatar);
+
+                // $storeAvatar = $this->saveAvatar($qq, $qqAvatar);
                 // $qqAvatar: http://qlogo3.store.qq.com/qzone/811687790/811687790/100  (加了图片防盗链，不能直接引用)
                 // 没加防盗链的头像地址 http://q1.qlogo.cn/g?b=qq&nk=494942200&s=100
                 $storeAvatar = "http://q1.qlogo.cn/g?b=qq&nk={$qq}&s=100";
@@ -121,13 +142,14 @@ class IndexController extends BaseController
             }
             $ip = Yii::$app->request->getUserIP();
             $comment = new Comment();
-            $res = $comment->mAddMessage($member->id, $content, $ip, $pid, $toUserId, $articleId);
+            $res = $comment->mAddMessage($member->id, $content, $ip, $pid, $toUserId, $articleId, $type);
             if ($res['status'] != 200) {
                 return $this->json(100, $res['msg']);
             }
             $data = Comment::find()->joinWith('member')->joinWith('user')
                 ->where(['colin_comment.id' => $comment->id])
-                ->asArray()->one();
+                ->asArray()->all();
+            $data = Comment::mFormatData($data, $type, $articleId);
             return $this->json(200, '留言成功', $data);
         }
     }

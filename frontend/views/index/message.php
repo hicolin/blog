@@ -12,7 +12,7 @@ use yii\helpers\Url;
                 </p>
             </section>
             <div class="textarea-wrap message" id="textarea-wrap">
-                <form class="layui-form blog-editor" action="">
+                <form class="layui-form blog-editor" onsubmit="return false">
                     <div class="layui-form-item">
                         <textarea name="editorContent" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
                     </div>
@@ -32,6 +32,7 @@ use yii\helpers\Url;
 </div>
 
 <?php $this->beginBlock('footer') ?>
+<script src="<?= Url::to('@web/js/comment.js') ?>"></script>
 <script>
     layui.use(['layedit', 'jquery', 'layer', 'flow'], function () {
         var $ = layui.jquery;
@@ -51,21 +52,26 @@ use yii\helpers\Url;
             }
             layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
                 var loadIndex = layer.load(3);
-                $.post('<?= Url::to(['index/add-message']) ?>', {qq: text, content: content}, function (res) {
+                $.post('<?= Url::to(['index/add-message']) ?>', {qq: text, content: content, type: 2}, function (res) {
                     if (res.status === 200) {
                         layer.closeAll();
                         layer.msg(res.msg, function () {
-                            layedit.setContent(editIndex, '', false);
-                            //todo
+                            var list = [];
+                            layui.each(res.data, function (index, item) {
+                                var html = '';
+                                html = jointSingleHtml(html, item);
+                                list.push(html);
+                            });
+                            $('#message-list').prepend(list.join(''));
+                            layedit.setContent(editIndex, '');
                         });
-                        console.log(res)
                     } else {
                         layer.close(loadIndex);
                         layer.msg(res.msg)
                     }
                 }, 'json')
             });
-        })
+        });
 
         flow.load({
             elem: '#message-list',
@@ -104,21 +110,28 @@ use yii\helpers\Url;
 
             // 提交回复
             $container.find('button').click(function () {
-                var content = $.trim($('textarea[name="replyContent"]').val());
+                var content = $.trim($container.find('textarea').val());
                 if (!content) {
                     return layer.msg('回复内容不能为空');
                 }
                 layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
                     var loadIndex = layer.load(3);
-                    var data = {qq: text, content: content, pid: targetPid, article_id: 0, to_user_id: targetId};
+                    var data = {qq: text, content: content, pid: targetPid, article_id: 0, to_user_id: targetId, type: 2};
                     $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
                         if (res.status === 200) {
                             layer.closeAll();
                             layer.msg(res.msg, function () {
-                                // todo dom操作
-                                layedit.setContent(editIndex, '', false);
+                                var list = [];
+                                layui.each(res.data, function (index, item) {
+                                    var html = '';
+                                    html = jointSecondHtml(html, item, targetPid);
+                                    list.push(html);
+                                });
+                                $container.before(list.join(''));
+                                $container.find('textarea').val('');
+                                $('.btn-reply').text('回复');
+                                $('.replycontainer').addClass('layui-hide');
                             });
-                            console.log(res)
                         } else {
                             layer.close(loadIndex);
                             layer.msg(res.msg)
@@ -126,92 +139,8 @@ use yii\helpers\Url;
                     }, 'json')
                 });
             })
-
-
         });
 
-
     });
-
-    function jointSingleHtml(html, item) {
-        html = `
-            <li class="zoomIn article">
-                    <div class="comment-parent">
-                        <img lay-src="${item.member.avatar}" />
-                        <div class="info">
-                            <span class="username">${item.member.nickname}
-                            ${(function () {
-                               if (item.member.qq == 811687790) {
-                                   return `<span class="layui-badge">博主</span>`;
-                               } else {
-                                   return '';
-                               }
-                            })()}
-                        </span>
-                        </div>
-                        <div class="comment-content">
-                            ${item.content}
-                        </div>
-                        <p class="info info-footer">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>${item.location}</span>
-                            <span class="comment-time">${item.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-id="${item.user_id}" data-pid="${item.id}" data-nickname="${item.member.nickname}">回复</a>
-                        </p>
-                    </div>
-                    `;
-        if (item.child.length > 0) {
-            item.child.forEach(function (val) {
-                html += `
-                    <hr />
-                    <div class="comment-child">
-                        <img lay-src="${val.member.avatar}">
-                        <div class="info">
-                            <span class="username">${val.member.nickname}
-                                ${(function () {
-                                    if (val.member.qq == 811687790) {
-                                        return `<span class="layui-badge">博主</span>`;
-                                    } else {
-                                        return '';
-                                    }
-                                })()}
-                            </span>
-                            <span style="padding-right:0;margin-left:-5px;">回复</span>
-                            <span class="username">${val.user.nickname}
-                                ${(function () {
-                                    if (val.user.qq == 811687790) {
-                                        return `<span class="layui-badge">博主</span>`;
-                                    } else {
-                                        return '';
-                                    }
-                                })()}
-                            </span>
-                            <div>${val.content}</div>
-                        </div>
-                        <p class="info">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>${val.location}</span>
-                            <span class="comment-time">${val.create_time}</span>
-                            <a href="javascript:;" class="btn-reply" data-id="${val.user_id}" data-pid="${item.id}" data-nickname="${val.member.nickname}">回复</a>
-                        </p>
-                    </div>
-                    `;
-            })
-        }
-        html += `
-                    <div class="replycontainer layui-hide">
-                        <form class="layui-form" action="">
-                            <div class="layui-form-item">
-                                <textarea name="replyContent"  placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>
-                            </div>
-                            <div class="layui-form-item">
-                                <button class="layui-btn layui-btn-xs" type="button">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-        `;
-        return html;
-    }
 </script>
 <?php $this->endBlock() ?>

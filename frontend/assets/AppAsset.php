@@ -27,8 +27,6 @@ class AppAsset extends AssetBundle
         'js/global.js',
         'js/plugins/nprogress.js',
         'js/article.js',
-//        'js/page_message.js',
-        'js/page_comment.js',
     ];
     public $depends = [
     ];

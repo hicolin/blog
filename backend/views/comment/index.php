@@ -62,7 +62,13 @@ use yii\helpers\Url;
                 <td><?= $list['member']['nickname'] ?><br><?= $list['member']['qq'] ?></td>
                 <td><?= htmlspecialchars_decode($list['content']) ?></td>
                 <td><?= $list['user']['nickname'] ?><br><?= $list['user']['qq'] ?></td>
-                <td><a href="javascript:;" style="color: rgb(1, 166, 255)" onclick="x_admin_show('查看', '<?= $frontArticleUrl . $list['article']['id']?>')" ><?= $list['article']['title'] ?></a></td>
+                <td>
+                    <?php if ($list['type'] == 1): ?>
+                    <a href="javascript:;" style="color: rgb(1, 166, 255)" onclick="x_admin_show('查看', '<?= $frontArticleUrl . $list['article']['id']?>')" ><?= $list['article']['title'] ?></a>
+                    <?php else: ?>
+                    <a href="javascript:;" style="color: rgb(1, 166, 255)" onclick="x_admin_show('查看', '<?= $frontMessageUrl ?>')" >留言板</a>
+                    <?php endif; ?>
+                </td>
                 <td><?= $typeArr[$list['type']] ?></td>
                 <td><?= $list['ip'] ?></td>
                 <td><?= $list['location'] ?></td>
