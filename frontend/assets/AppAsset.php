@@ -26,7 +26,7 @@ class AppAsset extends AssetBundle
         'js/wow.min.js',
         'js/global.js',
         'js/plugins/nprogress.js',
-        'js/article.js',
+        'js/heart.js',
     ];
     public $depends = [
     ];

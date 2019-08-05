@@ -168,7 +168,7 @@ class IndexController extends BaseController
     protected function getCateTitle($type) {
         $typeArr = [1 => '后端', 2 => '前端', 3 => '运维', 4 => '杂项'];
         if (!$type) {
-            return '首页';
+            return '欢迎您';
         } else {
             return $typeArr[$type];
         }

@@ -2,6 +2,10 @@
 use yii\helpers\Url;
 ?>
 
+<style>
+    .layui-layer-imgbar{background-color: rgba(0, 0, 0, .2)}
+</style>
+
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="javascript:;">首页</a>
@@ -57,6 +61,7 @@ use yii\helpers\Url;
             </th>
             <th>ID</th>
             <th>标题</th>
+            <th>缩略图</th>
             <th>内容</th>
             <th>标识</th>
             <th>类型</th>
@@ -75,6 +80,7 @@ use yii\helpers\Url;
                 </td>
                 <td><?= $list['id'] ?></td>
                 <td><?= $list['title'] ?></td>
+                <td><img class="thumb" src="<?= Url::to('@web' . '/' . $list['thumb']) ?>" alt="" style="width: 50px;height: 30px;cursor: pointer"></td>
                 <td style="color: dodgerblue; cursor: pointer" onclick="x_admin_show('查看', '<?= $frontArticleUrl . $list['id'] ?>')">查看</td>
                 <td><?= $flagArr[$list['flag']] ?></td>
                 <td><?= $typeArr[$list['type']] ?></td>
@@ -103,4 +109,17 @@ use yii\helpers\Url;
 
 </div>
 
+<?php $this->beginBlock('footer') ?>
+<script>
+    $('.thumb').click(function () {
+        var src = $(this).attr('src');
+        var json = {"data": [{"src": src}]};
+        layer.photos({
+            photos: json,
+            anim: 5,
+            shade: 0.3
+        })
+    })
+</script>
+<?php $this->endBlock() ?>
 

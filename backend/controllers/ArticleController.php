@@ -7,6 +7,7 @@
 
 namespace backend\controllers;
 
+use backend\libs\Helper;
 use backend\models\Article;
 use Yii;
 use yii\data\Pagination;
@@ -63,11 +64,15 @@ class ArticleController extends BaseController
         $typeArr = Article::getTypes();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $img = $post['thumb'];
-            if (stristr($img, 'data:image/')) {
-                self::dd(1);
+            $imgData = $post['thumb'];
+            if (stristr($imgData, 'data:image/')) {
+                $thumbDir = Yii::$app->params['articleThumbPath'];
+                $img = Helper::saveBase64Img($imgData, $thumbDir);
+                $thumb = $thumbDir . $img;
+                $post['thumb'] = $thumb;
+            } else {
+                $post['thumb'] = '';
             }
-            self::dd(2);
             $model = new Article();
             $res = $model->create($post);
             if ($res['status'] != 200) {
@@ -86,6 +91,15 @@ class ArticleController extends BaseController
         $typeArr = Article::getTypes();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
+            $imgData = $post['thumb'];
+            if (stristr($imgData, 'data:image/')) {
+                $thumbDir = Yii::$app->params['articleThumbPath'];
+                $img = Helper::saveBase64Img($imgData, $thumbDir);
+                $thumb = $thumbDir . $img;
+                $post['thumb'] = $thumb;
+            } else {
+                $post['thumb'] = '';
+            }
             $model = new Article();
             $res = $model->edit($post);
             if ($res['status'] != 200) {
