@@ -6,6 +6,8 @@ use yii\helpers\Url;
         .artiledetail img{width: 100%};
     }
 </style>
+<link rel="stylesheet" href="<?= Url::to('@web/js/plugins/highlight/highlight.min.css') ?>">
+<script src="<?= Url::to('@web/js/plugins/highlight/highlight.min.js') ?>"></script>
 
 <div class="doc-container" id="doc-container">
     <div class="container-fixed">

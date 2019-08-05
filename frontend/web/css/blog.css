@@ -30,7 +30,7 @@
 .article-item .footer .commenticon:before{content:"\f086"}
 .article-item .footer .num{font-family:SourceCodeProRegular,Menlo,Monaco,Consolas,"Courier New",monospace,'Helvetica Neue',Arial,sans-serif;display:inline-block;vertical-align:middle;font-style:normal}
 .article-item .content a:hover,.article-item .footer a:hover,.article-item .title a:hover,.article-item a:hover{color:#6bc30d;text-decoration:underline}
-.article-item .footer .tags .tag:hover{color:#fff;background:#6bc30d}
+/*.article-item .footer .tags .tag:hover{color:#fff;background:#6bc30d}*/
 .col-other{width:300px}
 .col-other .other-item{position:relative;background-color:#fff;margin-top:20px;overflow:hidden}
 .col-other .other-item .search{padding:20px;background-color:grey;position:relative}

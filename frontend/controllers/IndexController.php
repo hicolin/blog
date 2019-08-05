@@ -41,14 +41,25 @@ class IndexController extends BaseController
             return $this->json(200, 'ok', $res);
         }
 
+        // 分类文章
         $articleNum = [];
         $articleNum['all'] = Article::find()->where(['status' => 1])->count();
-        $articleNum['backend'] = Article::find()->where(['status' => 1, 'type' => 1])->count();
-        $articleNum['frontend'] = Article::find()->where(['status' => 1, 'type' => 2])->count();
-        $articleNum['linux'] = Article::find()->where(['status' => 1, 'type' => 3])->count();
-        $articleNum['other'] = Article::find()->where(['status' => 1, 'type' => 4])->count();
+        $typeArr = [1 => 'backend', 2 => 'frontend', 3 => 'linux', 4 => 'other'];
+        foreach ($typeArr as $key => $val) {
+            $articleNum[$val] = Article::find()->where(['status' => 1, 'type' => $key])->count();
+        }
 
-        return $this->render('index', compact('type', 'articleNum'));
+        // 热门文章
+        $hotArticles = Article::find()->where(['status' => 1])
+            ->orderBy('view_num desc')->limit(10)
+            ->asArray()->all();
+
+        // 最新留言访客
+        $guests = Comment::find()->joinWith('member')
+            ->where(['colin_comment.status' => 1])->groupBy('colin_comment.user_id')
+            ->orderBy('colin_comment.create_time desc')->limit(9)
+            ->asArray()->all();
+        return $this->render('index', compact('type', 'articleNum', 'hotArticles', 'guests'));
     }
 
     public function actionArticle()
@@ -74,6 +85,8 @@ class IndexController extends BaseController
         $article = Article::findOne($id);
         if (!$article) return $this->redirect('/');
         $this->view->title = $article->title;
+        $article->view_num += 1;
+        $article->save(false);
         return $this->render('article', compact('article', 'id'));
     }
 
@@ -146,6 +159,11 @@ class IndexController extends BaseController
             if ($res['status'] != 200) {
                 return $this->json(100, $res['msg']);
             }
+            if ($articleId) {
+                $article = Article::findOne($articleId);
+                $article->comment_num += 1;
+                $article->save(false);
+            }
             $data = Comment::find()->joinWith('member')->joinWith('user')
                 ->where(['colin_comment.id' => $comment->id])
                 ->asArray()->all();
@@ -168,7 +186,7 @@ class IndexController extends BaseController
     protected function getCateTitle($type) {
         $typeArr = [1 => '后端', 2 => '前端', 3 => '运维', 4 => '杂项'];
         if (!$type) {
-            return '欢迎您';
+            return '欢迎您的到来';
         } else {
             return $typeArr[$type];
         }
