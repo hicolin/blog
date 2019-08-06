@@ -41,6 +41,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'index/<type:\d+>' => 'index/index',
+                'message' => 'index/message',
+                'about' => 'index/about',
+                'article/<id:\d+>' => 'index/article',
             ],
         ],
     ],

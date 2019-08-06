@@ -68,7 +68,7 @@ AppAsset::register($this);
                     <a href="<?= Url::to(['index/about']) ?>" class="weixin"><i class="fa fa-weixin"></i></a>
                 </div>
                 <p class="mt05">
-                    Copyright &copy; 2019-<?= date('Y') ?> Colin All Rights Reserved <br/>Version: 1.0.0
+                    Copyright &copy; 2019-<?= date('Y') ?> Colin All Rights Reserved
                 </p>
             </div>
         </div>
