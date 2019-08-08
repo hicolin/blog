@@ -655,7 +655,8 @@ class Helper
     public static function extractHtmlData($content, $len)
     {
         $content = htmlspecialchars_decode($content);
-        $content = preg_replace('/<.*>/', '', $content);
+//        $content = preg_replace('/<.*>/', '', $content);
+        $content = strip_tags($content);
         if (strlen($content) <= $len) return $content;
         $content = mb_substr($content, 0, $len) . '...';
         return $content;
@@ -672,7 +673,7 @@ class Helper
         is_dir($dir) || mkdir($dir, 0755, true);
         $base64Str = explode(',', $base64Str);
         $data = base64_decode($base64Str[1]);
-        $imgName = date('YmdHis').mt_rand(100000, 999999) . '.png';
+        $imgName = date('YmdHis') . mt_rand(100000, 999999) . '.png';
         file_put_contents($dir . $imgName, $data);
         return $imgName;
     }

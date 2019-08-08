@@ -50,7 +50,9 @@ use yii\helpers\Url;
             if (!content) {
                 return layer.msg('留言内容不能为空');
             }
-            layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+            layer.prompt({title: '请输入您的QQ号', formType: 3, success: function () {
+                    setLocalQQ('.layui-layer-input', $);
+                }}, function(text, index){
                 var loadIndex = layer.load(3);
                 $.post('<?= Url::to(['index/add-message']) ?>', {qq: text, content: content, type: 2}, function (res) {
                     if (res.status === 200) {
@@ -64,6 +66,7 @@ use yii\helpers\Url;
                             });
                             $('#message-list').prepend(list.join(''));
                             layedit.setContent(editIndex, '');
+                            saveLocalQQ(text);
                         });
                     } else {
                         layer.close(loadIndex);
@@ -114,7 +117,9 @@ use yii\helpers\Url;
                 if (!content) {
                     return layer.msg('回复内容不能为空');
                 }
-                layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                layer.prompt({title: '请输入您的QQ号', formType: 3, success: function () {
+                        setLocalQQ('.layui-layer-input', $);
+                    }}, function(text, index){
                     var loadIndex = layer.load(3);
                     var data = {qq: text, content: content, pid: targetPid, article_id: 0, to_user_id: targetId, type: 2};
                     $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
@@ -131,6 +136,7 @@ use yii\helpers\Url;
                                 $container.find('textarea').val('');
                                 $('.btn-reply').text('回复');
                                 $('.replycontainer').addClass('layui-hide');
+                                saveLocalQQ(text);
                             });
                         } else {
                             layer.close(loadIndex);

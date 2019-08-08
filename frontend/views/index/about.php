@@ -7,7 +7,7 @@ use yii\helpers\Url;
             <article>
                 <section>
                     <h1>关于我</h1>
-                    <p>90后，PHP程序员一枚，熟悉前端，打算学习Java、Python，目标架构。大学毕业后，怀着对互联网的一丝热情，毅然决定转行。此前，也做过一些设计相关的工作。</p>
+                    <p>90后，PHP程序员一枚，熟悉前端，计划学习Java、Python，目标架构。大学毕业后，怀着对互联网的一丝热情，毅然决定转行。此前，也做过一些设计相关的工作。</p>
                     <p style="margin-top: -15px">憧憬着有一天可以实现财务自由，周游世界。。。 咳咳，好像扯得有点远了<img src="<?= Url::to('@web/layui/images/face/2.gif') ?>" alt="[哈哈]"></p>
                     <span>可以通过以下方式联系到我：</span>
                     <ul>
@@ -43,7 +43,7 @@ use yii\helpers\Url;
                     </ul>
                     <br><br>
                     <div>
-                        <img src="<?= Url::to('@web/image/bg/bg1.png')?>" style="width:100%;height:320px;">
+                        <img src="<?= Url::to('@web/image/bg/bg3.png')?>" style="width:100%;height:320px;">
                     </div>
                 </section>
             </article>

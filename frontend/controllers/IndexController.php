@@ -21,16 +21,18 @@ class IndexController extends BaseController
     public function actionIndex()
     {
         $type = (int)Yii::$app->request->get('type');
+        $keyword = Yii::$app->request->get('keyword');
         $page = (int)Yii::$app->request->get('page');
         if (!$page) $page = 1;
         if ($type && !in_array($type, range(1,4))) {
             return $this->redirect('/');
         }
-        $this->view->title = $this->getCateTitle($type);
+        $this->view->title = Service::getCateTitle($type);
 
         if (Yii::$app->request->isAjax) {
             $query = Article::find()->where(['status' => 1])->orderBy('create_time desc');
-            if ($type) $query->andWhere(['type' => $type]);
+            if ($type) $query = $query->andWhere(['type' => $type]);
+            if ($keyword) $query = $query->andWhere(['like', 'title', $keyword]);
             $count = $query->count();
             $pageSize = 5;
             $pages = ceil($count / $pageSize);
@@ -59,7 +61,8 @@ class IndexController extends BaseController
             ->where(['colin_comment.status' => 1])->groupBy('colin_comment.user_id')
             ->orderBy('colin_comment.create_time desc')->limit(9)
             ->asArray()->all();
-        return $this->render('index', compact('type', 'articleNum', 'hotArticles', 'guests'));
+        $data = compact('type', 'articleNum', 'hotArticles', 'guests', 'keyword');
+        return $this->render('index', $data);
     }
 
     public function actionArticle()
@@ -87,7 +90,9 @@ class IndexController extends BaseController
         $this->view->title = $article->title;
         $article->view_num += 1;
         $article->save(false);
-        return $this->render('article', compact('article', 'id'));
+        $article->content = Service::addImgUlr($article->content);
+        $relationArticle = Service::getRelationArticle($article->id);
+        return $this->render('article', compact('article', 'id', 'relationArticle'));
     }
 
     public function actionMessage()
@@ -183,23 +188,5 @@ class IndexController extends BaseController
         return $this->redirect('/');
     }
 
-    protected function getCateTitle($type) {
-        $typeArr = [1 => '后端', 2 => '前端', 3 => '运维', 4 => '杂项'];
-        if (!$type) {
-            return '欢迎您的到来';
-        } else {
-            return $typeArr[$type];
-        }
-    }
 
-    // 保存QQ头像
-    protected function saveAvatar($qq, $qqAvatar) {
-        // $avatarPath = Yii::getAlias('@web/uploads/avatar/');    // 这种方法会出现权限错误： mkdir(): Permission denied
-        $avatarPath = 'uploads/avatar/';
-        is_dir($avatarPath) || mkdir($avatarPath, 0777, true);
-        $avatarFile = $qq . '.jpg';
-        $storeAvatar = $avatarPath . $avatarFile;
-        file_put_contents($storeAvatar, file_get_contents($qqAvatar));
-        return $storeAvatar;
-    }
 }

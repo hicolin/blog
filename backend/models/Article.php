@@ -123,14 +123,14 @@ class Article extends Base
 
     public static function mFormatData($data)
     {
-        $len = 350;
+        $len = 300;
         $detect = new \Mobile_Detect();
         if ($detect->isMobile()) $len = 120;
         $flagArr = self::getFlags();
         $typeArr = self::getTypes();
         foreach ($data as &$list) {
             $list['url'] = Url::to(['index/article', 'id' => $list['id']]);
-            $list['pic'] = Url::to('@web/image/cover/default.jpg');
+            $list['pic'] = Yii::$app->params['imgDomain'] . '/' . $list['thumb'];
             $list['summary'] = Helper::extractHtmlData($list['content'], $len);
             $list['year'] = date('Y', $list['create_time']);
             $list['month'] = date('m', $list['create_time']);

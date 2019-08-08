@@ -5,6 +5,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
 
     // 前台域名
-    'frontDomain' => 'http://www.hicolin.cn'
+    'frontDomain' => 'http://www.hicolin.cn',
+    'imgDomain' => 'http://img.hicolin.cn',
 
 ];

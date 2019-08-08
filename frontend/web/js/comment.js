@@ -118,3 +118,15 @@ function jointSecondHtml(html, val, targetPid) {
         `;
     return html;
 }
+
+function saveLocalQQ(qq) {
+    localQQ = localStorage.getItem('qq');
+    if (!localQQ || localQQ != qq) {
+        localStorage.setItem('qq', qq);
+    }
+}
+
+function setLocalQQ(el, $) {
+    localQQ = localStorage.getItem('qq');
+    if (localQQ) $(el).val(localQQ);
+}

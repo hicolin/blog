@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 ?>
 <style>
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 1200px){
         .artiledetail img{width: 100%};
     }
 </style>
@@ -45,6 +45,11 @@ use yii\helpers\Url;
                                     <a href="#"><?= Url::current([], true) ?></a>
                                 </p>
                             </div>
+                            <h6>延伸阅读</h6>
+                            <ol class="b-relation">
+                                <li class="f-toe">上一篇：<a href="<?= $relationArticle['prevArticle'] ? Url::to(['index/article', 'id' => $relationArticle['prevArticle']['id']]) : '#'?>"><?= $relationArticle['prevArticle']['title'] ? : '没有了' ?></a></li>
+                                <li class="f-toe">下一篇：<a href="<?= $relationArticle['nextArticle'] ? Url::to(['index/article', 'id' => $relationArticle['nextArticle']['id']]) : '#'?>"><?= $relationArticle['nextArticle']['title'] ? : '没有了' ?></a></li>
+                            </ol>
                         </div>
                         <div class="f-cb"></div>
                         <div class="mt20 f-fwn fs-24 fc-grey comment" style="padding-top: 20px;">
@@ -79,6 +84,8 @@ use yii\helpers\Url;
 <?php $this->beginBlock('footer') ?>
 <script src="<?= Url::to('@web/js/comment.js') ?>"></script>
 <script>
+    hljs.initHighlighting();
+
     var article_id = '<?= $id ?>';
     layui.use(['layedit', 'jquery', 'layer', 'flow'], function () {
         var $ = layui.jquery;
@@ -96,7 +103,9 @@ use yii\helpers\Url;
             if (!content) {
                 return layer.msg('留言内容不能为空');
             }
-            layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+            layer.prompt({title: '请输入您的QQ号', formType: 3, success: function () {
+                    setLocalQQ('.layui-layer-input', $);
+                }}, function(text, index){
                 var loadIndex = layer.load(3);
                 var data = {qq: text, content: content, article_id: article_id, type: 1};
                 $.post('<?= Url::to(['index/add-message']) ?>', data, function (res) {
@@ -111,6 +120,7 @@ use yii\helpers\Url;
                             });
                             $('#message-list').prepend(list.join(''));
                             layedit.setContent(editIndex, '');
+                            saveLocalQQ(text);
                         });
                     } else {
                         layer.close(loadIndex);
@@ -161,7 +171,9 @@ use yii\helpers\Url;
                 if (!content) {
                     return layer.msg('回复内容不能为空');
                 }
-                layer.prompt({title: '请输入您的QQ号', formType: 3}, function(text, index){
+                layer.prompt({title: '请输入您的QQ号', formType: 3, success: function () {
+                        setLocalQQ('.layui-layer-input', $);
+                    }}, function(text, index){
                     var loadIndex = layer.load(3);
                     var data = {qq: text, content: content, pid: targetPid, article_id: article_id,
                         to_user_id: targetId, type: 1};
@@ -179,6 +191,7 @@ use yii\helpers\Url;
                                 $container.find('textarea').val('');
                                 $('.btn-reply').text('回复');
                                 $('.replycontainer').addClass('layui-hide');
+                                setLocalQQ('.layui-layer-input', $);
                             });
                         } else {
                             layer.close(loadIndex);

@@ -15,12 +15,11 @@ use yii\helpers\Url;
                 <div class="other-item wow swing" id="categoryandsearch">
                     <div class="search">
                         <label class="search-wrap">
-                            <input type="text" id="searchtxt" placeholder="输入关键字搜索" />
+                            <input type="text" name="keyword" placeholder="输入关键字搜索" />
                             <span class="search-icon">
 					                <i class="fa fa-search"></i>
 					            </span>
                         </label>
-                        <ul class="search-result"></ul>
                     </div>
                     <ul class="category mt20" id="category">
                         <li data-index="0" class="slider"></li>
@@ -61,6 +60,7 @@ use yii\helpers\Url;
 <?php $this->beginBlock('footer') ?>
 <script>
     var type = '<?= $type ?>';
+    var keyword = '<?= $keyword ?>';
     if (!type) type = 0;
     layui.use('flow', function () {
         var $ = layui.jquery;
@@ -70,7 +70,7 @@ use yii\helpers\Url;
             isLazyimg: true,
             done: function (page, next) {
                 var list = [];
-                $.get('<?= Url::to(['index/index'])?>', {type: type, page: page}, function (res) {
+                $.get('<?= Url::to(['index/index'])?>', {type: type, page: page, keyword: keyword}, function (res) {
                     res = res.data;
                     layui.each(res.data, function (index, item) {
                         var html = '';
@@ -80,7 +80,16 @@ use yii\helpers\Url;
                     next(list.join(''), page < res.pages)
                 }, 'json')
             }
+        });
+
+        $('.fa-search').click(function () {
+            var keyword = $.trim($('input[name="keyword"]').val());
+            if (!keyword) {
+                return layer.msg('关键词不能为空');
+            }
+            location.href = '<?= Url::to('/') ?>' + '?keyword=' + keyword;
         })
+
     });
 
     function jointSingleHtml(html, item) {
@@ -102,7 +111,7 @@ use yii\helpers\Url;
                             </a>
                             ${item.summary}
                         </div>
-                        <div class="read-more">
+                        <div class="read-more" style="clear: both">
                             <a href="${item.url}" class="fc-black f-fwb" target="_blank">继续阅读</a>
                         </div>
                         <aside class="f-oh footer">
