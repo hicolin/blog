@@ -33,7 +33,7 @@ class Service extends BaseController
     public static function getRelationArticle($id)
     {
         $prevArticle = Article::find()->where(['status' => 1])->andWhere(['>', 'id' , $id])
-            ->orderBy('create_time desc')->limit(1)->asArray()->one();
+            ->orderBy('create_time asc')->limit(1)->asArray()->one();
         $nextArticle = Article::find()->where(['status' => 1])->andWhere(['<', 'id' , $id])
             ->orderBy('create_time desc')->limit(1)->asArray()->one();
         $relationArticle = compact('prevArticle', 'nextArticle');
