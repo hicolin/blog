@@ -89,5 +89,16 @@ class CommentController extends BaseController
         return $this->json(200, '批量删除成功');
     }
 
+    public function actionViewComment()
+    {
+        if (Yii::$app->request->isPost) {
+            $id = (int)Yii::$app->request->post('id');
+            $model = Comment::findOne($id);
+            if (!$model) {
+                return $this->json(100, '该条评论不存在');
+            }
+            return $this->json(200, '获取成功', htmlspecialchars_decode($model->content));
+        }
+    }
 
 }

@@ -60,7 +60,9 @@ use yii\helpers\Url;
                 </td>
                 <td><?= $list['id'] ?></td>
                 <td><?= $list['member']['nickname'] ?><br><?= $list['member']['qq'] ?></td>
-                <td><?= htmlspecialchars_decode($list['content']) ?></td>
+                <td>
+                    <a href="javascript:;" style="color: rgb(1, 166, 255)" onclick="viewComment('<?= $list['id'] ?>', '<?= Url::to([$this->context->id . '/view-comment']) ?>')">查看</a>
+                </td>
                 <td><?= $list['user']['nickname'] ?><br><?= $list['user']['qq'] ?></td>
                 <td>
                     <?php if ($list['type'] == 1): ?>
@@ -109,6 +111,23 @@ use yii\helpers\Url;
             }
             layer.msg(res.msg, {icon: icon, time: 1500})
         }, 'json')
+    }
+
+    function viewComment(id, url) {
+        layer.load(3);
+        $.post(url, {id: id}, function (res) {
+            layer.closeAll();
+            if (res.status === 200) {
+                layer.open({
+                    title: '查看评论',
+                    type: 1,
+                    area: ['90%', '90%'],
+                    content: '<div style="padding: 20px">' + res.data + '</div>'
+                });
+            } else {
+                layer.msg(res.msg, {icon: 2, time: 1500})
+            }
+        }, 'json');
     }
 </script>
 <?php $this->endBlock() ?>
