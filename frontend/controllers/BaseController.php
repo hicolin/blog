@@ -31,7 +31,7 @@ class BaseController extends Controller
     /**
      * 调试函数（支持语法高亮）
      */
-    public function dd(){
+    public static function dd(){
         $param = func_get_args();
         foreach ($param as $p)  {
             VarDumper::dump($p, 10, true);

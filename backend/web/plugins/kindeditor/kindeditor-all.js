@@ -6707,10 +6707,8 @@ KindEditor.plugin('code', function(K) {
 						var type = K('.ke-code-type', dialog.div).val(),
 							code = textarea.val(),
 							cls = type === '' ? '' :  ' lang-' + type,
-							html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
-                        	// html = '<pre><code class="'+ type + '">' + K.escape(code) + '</code></pre>';
-						// <pre class='hljs'><code>
-							html = '<pre class=\'hljs\'><code>\n' + K.escape(code) + '\n</code></pre>'; // code元素会被过滤掉
+							// html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
+							html = '<pre class="hljs"><code>\n' + K.escape(code) + '</code></pre> ';
                         if (K.trim(code) === '') {
 							alert(lang.pleaseInput);
 							textarea[0].focus();

@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 ?>
 
-<script src="<?= Url::to('@web/plugins/kindeditor/kindeditor-all.js') ?>"></script>
+<script src="<?= Url::to('@web/plugins/kindeditor/kindeditor-all.js?201908140956') ?>"></script>
 <script src="<?= Url::to('@web/plugins/kindeditor/lang/zh-CN.js') ?>"></script>
 <style>
     .layui-form-item .layui-input-inline{width: 380px }
@@ -68,7 +68,7 @@ use yii\helpers\Url;
         <div class="layui-form-item">
             <label for="content" class="layui-form-label">内容</label>
             <div class="layui-input-block">
-                <textarea name="content" placeholder="请输入内容" style="width: 760px; height: 250px" class="layui-textarea"><?= htmlspecialchars_decode($model['content']) ?></textarea>
+                <textarea name="content" placeholder="请输入内容" style="width: 760px; height: 250px" class="layui-textarea"><?= $model['content'] ?></textarea>
             </div>
         </div>
         <div class="layui-form-item">

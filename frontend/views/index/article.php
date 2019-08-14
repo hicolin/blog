@@ -31,7 +31,7 @@ use yii\helpers\Url;
                             <span class="year fs-18"><?= date('Y', $article['create_time']) ?></span>
                         </div>
                         <div class="content artiledetail" style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
-                            <?= htmlspecialchars_decode($article['content']) ?>
+                            <?= $article['content'] ?>
                             <div class="copyright mt20">
                                 <p class="f-toe fc-black">
                                     非特殊说明，本文版权归 Colin 所有，转载请注明出处.
