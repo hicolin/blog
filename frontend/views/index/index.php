@@ -98,7 +98,7 @@ use yii\helpers\Url;
                         <div class="fc-flag">${item.type}</div>
                         <h5 class="title">
                             <span class="fc-blue">【${item.flag}】</span>
-                            <a href="${item.url}" target="_blank">${item.title}</a>
+                            <a href="${item.url}">${item.title}</a>
                         </h5>
                         <div class="time">
                             <span class="day">${item.day}</span>
@@ -106,13 +106,13 @@ use yii\helpers\Url;
                             <span class="year fs-18 ml10">${item.year}</span>
                         </div>
                         <div class="content">
-                            <a href="${item.url}" class="cover img-light" target="_blank">
+                            <a href="${item.url}" class="cover img-light">
                                 <img lay-src="${item.pic}">
                             </a>
                             ${item.summary}
                         </div>
                         <div class="read-more" style="clear: both">
-                            <a href="${item.url}" class="fc-black f-fwb" target="_blank">继续阅读</a>
+                            <a href="${item.url}" class="fc-black f-fwb">继续阅读</a>
                         </div>
                         <aside class="f-oh footer">
                             <div class="f-fl tags">
