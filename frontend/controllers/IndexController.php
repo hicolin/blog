@@ -59,7 +59,7 @@ class IndexController extends BaseController
         // 最新留言访客
         $guests = Comment::find()->joinWith('member')
             ->where(['colin_comment.status' => 1])->groupBy('colin_comment.user_id')
-            ->orderBy('colin_comment.create_time desc')->limit(9)
+            ->orderBy('colin_comment.create_time desc')->limit(12)
             ->asArray()->all();
         $data = compact('type', 'articleNum', 'hotArticles', 'guests', 'keyword');
         return $this->render('index', $data);
